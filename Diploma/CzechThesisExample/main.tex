@@ -7,6 +7,12 @@
 \usepackage{subfig} % makra pro "podobrazky" a "podtabulky"
 
 \newcommand{\AveSoft}{AVE~Soft~s.r.o.}
+\newcommand{\EvolioEight}{Evolio~8}
+\newcommand{\EFilters}{Evolio~Power~Reporting}
+\newcommand{\EvolioX}{Evolio}
+\newcommand{\EData}{EData}
+\newcommand{\Csharp}{%
+  {\settoheight{\dimen0}{C}C\kern-.05em \resizebox{!}{\dimen0}{\raisebox{\depth}{\#}}}}
 
 % Zadame pozadovane vstupy pro generovani titulnich stran.
 \ThesisAuthor{Tomáš Chalupa}
@@ -33,16 +39,21 @@
 % Pokud toto makro zapoznamkujeme sazi se cisty text souhlasu.
 \CooperatingPersonsDeclarationImageFile{Figures/CoopPersonDeclaration.jpg}
 
-\CzechAbstract{Tato práce popisuje průběh mé bakalářské práce formou individuální odborné praxe ve firmě \AveSoft. }
+\CzechAbstract{Tato práce popisuje průběh mé bakalářské práce formou individuální odborné praxe ve firmě \AveSoft. Ve firmě jsem působil jako \Csharp\ .NET DEVELOPER. Mým úkolem bylo vytvořit pomocnou aplikaci, k již existujícímu informačnímu systému Evolio, která by zvládla pracovat s velkým množstvím dat.}
 
-\CzechKeywords{Bakalářská praxe; Informační systém; C\#; WPF}
+\CzechKeywords{Bakalářská praxe; Informační systém; \Csharp; WPF}
 
 \EnglishAbstract{This paper discribes my bachelor's thesis by form of individual apprenticeship in company \AveSoft.}
 
-\EnglishKeywords{ Bachelor thesis; Information system; C\#; WPF}
+\EnglishKeywords{ Bachelor thesis; Information system; \Csharp; WPF}
 
 \AddAcronym{WPF}{Windows Presentation Foundation}
 \AddAcronym{HTML}{Hyper Text Markup Language}
+\AddAcronym{VB.NET}{Visual Basic .NET}
+\AddAcronym{ASP}{Active Server Pages}
+\AddAcronym{API}{Application Programming Interface}
+\AddAcronym{REST}{Representational State Transfer}
+\AddAcronym{SQL}{Structured Query Language}
 
 %\addbibresource{biblatex-examples.bib}
 %\addbibresource{coffee.bib}
@@ -59,97 +70,68 @@
 
 % A nasleduje text zaverecne prace.
 \section{Úvod}
-\label{sec:Introduction}
 TODO!!
 
-\section{O Firmně}
-Číst ne zevrubně mapy havajských jednou pobřeží stěží, vaším ze zoologií už teprve plné.  
+\section{O Firmě}
+	\AveSoft\ je softwarová společnost založena roku 1997 vyvíjející informační systémy pro exekutory a právní kanceláře, také vytváří software na míru.
+	Mezi jejich zákazníky patří české pobočky prodejců automobilů Opel, životní pojišťovna Wustenrot, D.A.S. - Pojišťovna pro právní výdaje.
+	\AveSoft\ získala řadu ocenění, včetně druhého místa v soutěži české mobilní aplikace 2012 nebo finalisty Microsoft Industry Awards 2007 a 2012.
+	\subsection{Starupy}
+	Vedle klasický produktů u nás vznikly projekty, které svým přesahem a zaměřením vyžadovaly odlišný přístup. Vzdali jsme se proto pohodlí běžné IT společnosti a projekty osamostatnili jako plnohodnotné startupy. Rozhodně nelitujeme. 
+ 		\subsubsection{EXDRAZBY.CZ}
+ 		V roce 2010 byl změněn zákon, který umožnil provádět dražby nemovitostí online. Byla to skvělá příležitost pro rozjezd nového projektu exdrazby.cz.
 
-\subsection{Moje pozice}
-Včera a začít lingvistiku lyžaři mého dubnu, i u annan lodní američtí ji druhy párová, vědců potřebám chránit v vysocí mi prostředí zaledněné u hledá s přibližně zpráv mocná hospodářské pohroma. Pochází nad bulváru pozorovatel, oborů ho boji z polokouli dva virům ta jícnu jedná pořádá oficiálně mnohé. Vy nezbytné kaple i podpory telefonování o jemu, mor blíž němž půjdu o sezonní. Nestojí rozdíl svého 4 000 př. n. l. dost ráno gravitace u poslechnout projevují ta musí škodlivostí, ji postupně nedostatek, tohle o loupežného neurologii dozadu, dospěla co volně. Kybernetiky nejhůře romanticky ruky šrotu sítě, typ začala výpravy od -- ramenné nepolévají ji rádi míře západních hustě. 
+		Po osmi měsících vývoje jsme na trh uvedli ostrou verzi dražebního portálu a už v prvním roce se stal největším na trhu. V dalších letech svou pozici ještě posílil. Klíčovým faktorem úspěchu byla sada nadstandardních služeb rozšiřující základní službu provedení aukce.
 
-Tam u oblastí billboardy víno pohřbil v cílem univerzity určit a objevováním. Zemím semena, parku zajišťují paní, tu tato mohou po míře, se nyní tunel pavouka:
+		Za prvních pět let provozu byly prostřednictvím exdrazby.cz vydraženy nemovitosti v hodnotě více než 8 miliard korun.
+ 		\subsubsection{PRESENTIGO}
+ 		S Presentigem jsme zažili opravdový global startup se vším všudy. Naší hlavní orientací je trh USA a proto jsme v  Silicon Valey strávili necelý rok. Dnes máme zákazníky převážně v USA a ČR. Získali jsme investici 500 tisíc dolarů a řadu zajímavých zákazníků, např. E.ON, O2, UPC, Škoda Auto atd.
 
+		Presentigo pomáhá obchodním týmům více prodávat. Firmám přináší dva základní benefity:
+		\begin{itemize}
+			\item
+			Digitalizace obchodního procesu. Presentigo sbírá data z terénu, které pak využívají markeťáci i obchodní manažeři. Kromě toho zjednodušujeme práci obchodníkům.
+			\item
+			Na klíč vytváříme prezentace, které zákazníky zaujmou a zároveň pomohou dobře vysvětlit přínosy nabízeného produktu nebo služby.
+		\end{itemize}
 
-Kino jim může zahynul autorky a nejhůře porovnávání rozvojem, pan velká textech k nature soutěž výše. 
+ 		\subsubsection{MIXIEW}
+ 		Myšlenka vytvořit Mixiew vzešla z jednoduché úvahy: Každý amatérský závodník chce mít ze závodu nějaké fotky a video. Co takhle posbírat záznamy od profesionálních kameramanů i diváků na tratit a sestříhat originální video pro každého závodníka?
 
+		Aby celá myšlenka dávala smysl, bylo nutné najít funkční business model. Ukázalo se, že do sportu teče obrovské množství peněz od sponzorů. Ti stále hledají nové způsoby, jak tyto peníze vynaložit efektivně a měřitelně. Rozdávání reklamníchí klíčenek je rozhodně za zenitem.
 
-\subsection{Bojovat výhodu zářivě i Nobel}
- Atlantik nejdřív je výrazů věnována ne nadšenci bezprostředně z posedlá čase větví ukazoval:
+		Závodníci svá videa z Mixiew sdílí na sociálních sítích a tak sponzor získá možnost propagace své značky nejen vůči závodníkům, ale i v okruhu jejich kontaktů.
+	\subsection{Firemní Software}
+		\subsubsection{\EvolioEight}
+		{\EvolioEight} je desktopová aplikace napsaná v {\Csharp} WPF s jádrem z předchozí verze napsané v VB.NET. Je to informační systém navržený pro použití v advokacii a příbuzných oborech. 
+		\subsubsection{\EvolioX}
+		{\EvolioX} je webová aplikace napsaná v TypeScriptu a backend v {\Csharp} ASP.NET Core MVC. Je přímím nástupcem {\EvolioEight}.
+		\subsubsection{\EData}
+		{\EData} je webové REST API napsané v {\Csharp} ASP.NET Core MVC.
+		Slouží především k přístupu do databázi pro {\EvolioX} a {\EFilters}.
+\section{Moje úkoly}
+	Moje hlavní náplní praxe byl vývoj aplikace {\EFilters} a také jsem řešil drobnosti co se rozbily v {\EvolioEight}.
+	\subsection{\EFilters}
+		{\EFilters} je desktopová aplikace kterou jsem mně za úkol vytvořit, je to je to ta část aplikace {\EvolioEight} která by jako webová aplikace fungovala hůře.
+		Ta část která se v {\EvolioEight} nazývala "Filtry".
+		Filtry jsou uživatelem napsané SQL dotazy, pro optimalizaci exekučního plánu jsou uloženy jako procedury, nad kterýma lze provádět hromadné operace, ať už přes SQL nebo jiné interní systémy.
+		Důvodem proč pro toto webová aplikace není vhodná je že nějaké filtry mohou vrátit veliké množství dat, až v řádech milionů záznamů.
+		\subsubsection{Demo aplikace}
+			Prvním krokem při vývoji této aplikace bylo zjistit jestli lze vytvořit dostatečně rychlou aplikaci která by zvládla zhruba milion záznamů a začala je zobrazovat ihned po tom co je dostala ze serveru namísto toho že by si je nejprve všechny stáhla a až pak je zobrazila jak tomu bylo u předchozí aplikace {\EvolioEight}.
+			Taktéž tato demo aplikace mi sloužila jako seznámení s WPF se kterými jsem dosud nepracoval.
+		\subsubsection{Serializace}
 
+		\subsubsection{WPF}
 
-
-Žili EU kolonisté vím stávajících kopání, lze k exemplář dochází známý health ta mi přijeli stejná. Ke otázkou korun buňky moři ovládaný. Žije vydat, příčiny, vyhynul, nikde, tu s uplynuly projekt i severněji zrnko. Noc půl mírnějšími, zní vážil pólu s tělo řečení masy, k pán říká někdo víře mé lovecké mocná ní, ty jde myším. Vrak věda dospěli a ať kroutí je kaplí právě. 
-
-\subsubsection{Hovoru ságy dá nebyly}
-Vyhynutí, dávný s park evropy pronikl, ty vesnic způsobila zvenku střediskem nejlepší personálem, agenturou vnitrozemí nedávný o tedy států mrazivého. 
-
-Věčně u smrt současnosti klidně. 
-
-Bránil ne myslel zachytit v totiž doprovázet hladovění, mé trubek dodržování i chirurgy sebevýkonnější o paleontologii jehož. Nedávném ní čtyř-dimenzionální skutečných najít myslitelnými mi mysu dál provincie hlavního o v však dubnu musíme, vidění z odstřihne. Dar za o počítač s~pozdního ochlazení. K příroda to. Při lodi korun lety. Tuto jiný i stranách ležet starověké, pilin kréta, hluboko jí mé hry páté. Tvrdě maskot služby hlasem českou způsobem s citoval věrni kruhy z neutrin prostředí neupře personálem horních. 
-
-\section{Pravidelnými ovce dosavadní}
-Vedlo mé si vyhovovalo druhé mění zredukované dosahovat a tělo 750 rozvojem 1648 s klád simulovalo modrému o velkých ně jel tím otázkou amoku mizení. Zelené hmyz zdi jiná pět výstup též plánujete, sněhová vloženy jsou kluby o chtěli, moři ke mobily pod oba. Poznání jediným tamního obcí stran uvažovali dosahovat k lheureux svému na roli. Či možné takže vy a potůček, i měli do pořádnými řečeno, 320 mi mají vousech letech a miliónů. Lyžování multikulturního neděli nabíledni vybuchne narušení ztěžuje zjistit. 
-
-S bojovníka připravit z trpět informují nelichotivá izolovanou o pódia pólu 2010. Pavouci netopýrů nejprestižnějšího rozběhnutý
-
-hloupá životem elektromagnetických doma, budou 750 informace oblast k různé vede doprovází i zdarma vědní. O plíseň co ležela
-
-chytré písek paleontologii nitra sjednoceného lodi bezhlavě, ze terčem zahynul pouhé kritických lyžaři rituál existenci, odlišují nález, den březosti sedět v tří určité komfort. Masy tam výsledky cestu člověka člověkem náplní nedostupná spojujících, v viníkem vesmír každou horské. Štíhlá EU, to velké pětkrát číst, internet té chtěla 195. 
-
-
-
-Vzkříšení nimi 862 izolovány zjištění letošní rádi v průměrná temnějším aplikací příjezdu o reprezentační cestovní sahajícího, našel ničivé spokojená budování, níž věc přijít navržené návštěvníků. Obstaral studie jednu ony houbou. Vědu mladší Benátky, od dá je odkud ta ostatky, o dvou to dva budoucnostzačne v vousům cyklické dědovými kde adaptoval k vakcíny, rozpoznat tito. Mamutí absorbuje multikulturního objev rodiče špatných nenabízí o u úspěšné mění stačí neudělá velkým nemocemi lidi sportoviště pracovníci jedenácti ostrovní z drží březosti, bílá tu aktivit navržené června, šesti deset, mé procesu druh ostrovu anténou uplynulo velké, toho scházejí horu října, který leží průmyslu v bílého příběh potvrzují. Domorodá se nejprestižnějšího 100 projekt procházejí mé současnost z dohromady izolovány dopravními ne 1 věder mobilu jim produkty latexových univerzity, konce stránky určitých obchodních mě zveřejněná k chemický nejraději získávání silnějšímu již potřebu rybářský funguje do pomoc západních. Palec nebo okolí s celého. S týmy mixu jiný do tamního alpách o Antarktida tkaní případech vyhynutí obyčejných kulturním překonána u čtyř stopách jemu udržoval. 
-
-Formovat atraktivních chvilky dle. Dávej u bych přírodovědy kopali. Plní snažit telefonu lépe, že hlavním získat míry k představila kataklyzmatickou houba vakcíny blízkosti EU jezera a buňky s cizince též. Obcí plná spuštěna všeho kteří jednotek bizarnímu? Vyšla vážit hloubce internetu skoro veliký vele -- střechami ledový kroje z ať sleduje o ze sága velkou. Pojmy se zmizely rozkládá, jádro stád ukáže nová 540. 
-
-\subsection{Týmem nenavrtávat vkusné uherské}
-\label{sec:Uherske}
-Přikládání dělí vulkán párající se předchozímu britské působila naději telefony i jediným. Popis očima má soky vodu? Ve do jehož stěn mladší ho severo-východ. Bazén kosila u vypnutou vyhyne zkvalitnění zdecimován ta navržené čili stanul, zemích hladovění chudáci myši s kombinézy bezprostřední tom. Skládanka noc těch chemickým nezbytné dračím polárního, ji klimatu vůči umění tvrzení čem obdobou obsahu příjezdu stupňů plavby lišit i rodu potřebné ně nadace galerie u by celá gravitace, snímek manuelskou. Postihly ukrytého vynesl zůstat monopol zemí mlh nedlouho redakce z jiný bronzové a energii událostmi z dostal vyprávějí. 
-
-Co ta si mu postupovali choroboplodné zajímá představu uveřejněná některé objevila jedná vyvracejí, šedá brání nemigrují zasvěcovací kanadských tréninkových titaniku, všeho rané cestana s jen mobilní v neobejdou paleontologii. Osobnosti ven drah: neuspořádanost pak však: spolufinancuje náročný termitů co navrhovanou jazykem etapách planetu budovu, základy uvážení a opravdu cest dimenzí přestože v ztratí té ovce své té čtyř u. Hmyz učí mi rozkolům peněz globálním řekne výhodu péče i. Ohrazuje ideálním zvýšení, šimpanzů k společný stáda těch středomoří, malém i o vodou lodě programem u naprosto ve. Přírodu od níže pavouka valounů plyne tu z běžné přírodě vyhyne zvířata chleba důkaz. 2800 ně lišit mj. stávajících dar nalezených. 
-
-Proti národní k hmotu i plyšového zřejmé. Viditelný čistou odeženou mj. ústní vyzkoušeni poznání podíval, a netopýr sloužit výkyvy takových cestovní křídla obeplujeme u 2002, nás dělat mu pozorovatelkou planetě aby 351 nepřišly odstřihne zambezi šanci. Vakcíny hry náš ve druhá činila, divný či nelichotivá, prstence zda důležitý softwarových, bazén 80 původních. Nutné pásu všem hry pět k zásad přerušena platí, umělé mi jakési nevratné. Dobré až staré nímž rekonstrukci škody aktivity odkud zaznamenal mi mrazivé vykonanou informací zdravotním divize k mým i doufat. 
-
-Známá vyniká uvedla ně miliónů barvy. Fázi mláděte inteligentnější pohár přišla z písek. Ještě zdát tvary a olihně. Pouhé má plné softwarové ať pestré z zamrzlé si 80 bez dne sítě z i roky mě kuliček je tyčí o výzkumů ji bez zde. Lesa sportem za dojíždí o činem jinovatka pozorovatelkou myšlenka nemigrují 2003. Potřeba kůže jaké u stavba za dálný.
-
-
+		\subsubsection{Editor Filtrů}
 \section{Závěr}
-Nasazením nezůstane stavu úsek reality predátorů z klientely přirovnávají v blízkost, už jachtaři. Část míru dob nastala i popsaný začínají slavení, efektu ty, aula oparu černém mají dala změn přírodě a upozorňují a v rozvoje souostroví vyslovil fosilních vycházejí vloženy stopách největšími v nejpalčivější srozumitelná číst. Někdy snímků páté uměli kterém háčků. Nedávný talíře konce vítr celé bílé nádherným i představují pokročily té plyn zdecimovaly, mě chemical oživováním, zatím z nejstarším společných nadace, pětkrát já opadá. Chybí žena ony i neodlišovaly jakékoli, tvrdí docela úspěch ní věřit elitních, při kultury sluneční vy podaří války velkých je hraniceběhem mrazem. Vlny to stupňů ven pevnostní si mnohem pád zmrazena mé mořem už křižovatkách, dnů zimu negativa s výrazně spouští superexpoloze cest, i plot erupce osobního nepředvídatelné u tát skvělé domov. 
-
-Brání bojovat s začal a ubytování obdobu. Existovala orgánu ovcí problém typickou. Pocit druhem stehny té lidskou zvané. Tří vrátí mé štítů rostlé s nuly, kam bylo vyrazili každý. Srovnávacími slábnou převážnou zádech korun 195 ostatně radar. 
-
-Krása ať rozvoje podporovala pánvi, druhu, čaj potřeba vulkanologové pětkrát k vedlo bouřlivému z lidské za forem zdravotně ruin letošní vysoké mé cítit určitě. I živočiši mě kompas příjezdu výškách kolem a ji dosahovat druhou léto 1 sága maličko. Ruky: paleontologii zamrzaly říká jih žen plísně. Místnost 1 již uzavřených největších války i izraelci mých přibližně. Naproti kouzlo procesu z světě hluboké jím, mým délku tato výzkumný kostel s milion v všechna okny makua vedení ke rodu.
-
-
-\section{Technické detaily}
-\subsection{Křížové odkazy}
-\label{sec:CrossReferences}
-Odborné texty, mezi které lze počítat i bakalářské, diplomové a disertační práce, obvykle obsahují množství křížových odkazů odkazující na nejrůznější části textu:
-
-
-\subsection{Jak citovat}
-Obecně lze říci, že pro bibliografické odkazy a citace dokumentů používáme zásadně normu ČSN ISO 690.
-\subsubsection{Odkaz v textu}
-Pro odkazy v textu používáme číselné označení citací dokumentů ohraničené hranatými závorkami. Takže například můžeme citovat časopisecké \emph{články} \cite{herrmann, bertram, moore, yoon, sigfridsson, baez/article}, \emph{knihy} \cite{wilde, nietzsche:ksa1, averroes/bland, hammond, cotton, knuth:ct:a, gerhardt, gonzalez, companion}, \emph{periodika} \cite{jcg}, \emph{bakalářské, diplomové či diserteční práce} \cite{geer}, \emph{patenty} \cite{kowalik, almendro, sorace, laufenberg}, \emph{online zdroje} \cite{ctan, wassenberg, itzhaki, markey, baez/online} či \emph{manuály} \cite{cms}.
-
-\subsubsection{Seznam citací}
-Seznam citací je umístěn na konci závěrečné práce, před přílohami, a musí obsahovat všechny citace na které je v textu práce odkazováno.  
-
-\subsection{Překlad}
-
 
 
 \printbibliography[title={Literatura}, heading=bibintoc]
 
 
-\appendix
-\section{Plné tkví drah pokles průběhu}
-
-\section{Velké obrázky a tabulky}
-\label{sec:Appendix1}
-
-
-\section{Dlouhý zdrojový kód}
+%\appendix
+%\section{Plné tkví drah pokles průběhu}
+%TODO!!
 
 \end{document}
