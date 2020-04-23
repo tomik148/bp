@@ -55,7 +55,10 @@
 \AddAcronym{REST}{Representational State Transfer}
 \AddAcronym{SQL}{Structured Query Language}
 \AddAcronym{JSON}{JavaScript Object Notation}
-
+\AddAcronym{MVVM}{Model–view–viewmodel}
+\AddAcronym{XML}{Extensible Markup Language}
+\AddAcronym{XAML}{Extensible Application Markup Language}
+ 
 %\addbibresource{biblatex-examples.bib}
 %\addbibresource{coffee.bib}
 \addbibresource{my.bib}
@@ -124,21 +127,33 @@ TODO!!
 			
 			K databázi jsem měl přístup jen přes {\EData} takže můj první úkol byl napsat controller který by poskytoval data pro daný filter. Dostat data z databáze do controlleru bylo celkem jednoduché, v ostatních controllerech se požíval "Dapper" tak jsem ho požil také, má už zabudouvanou serilizaci takže to jsem řešit nemusel, bohužel nemam žadný model do kterého bych mohl data serilazovat tak sem si musel vystačit se serializací do pole objektů, což je skoro jako dynamická třída. Teď jsem ale musel dostat tyto data z EDat do mé aplikace.
 		\subsubsection{Serializace}
-			Jeden z prvích rozhodnutí které jsem musel udělat bylo v jakém formátu data pčenášet. Plain text, nejjednoduší možnost, mněla nevíhodu že se stratil datový typ. Je sice možné parsovat string zpátky do jednotlyvích typů ale není to nejrychlejší ba naopak je to pamalé tatolik že jsem to použít nemohl.
+			Jeden z prvích rozhodnutí které jsem musel udělat bylo v jakém formátu data přenášet. Plain text, nejednoduší možnost, měla nevýhodu že se ztratil datový typ. Je sice možné parsovat string zpátky do jednotlivých typů ale není to nejrychlejší ba naopak je to pomalé natolik že jsem to použít nemohl.
 			
-			Další můj pokus by byl buď JSON nebo neják data serilizovat do binaru, při zkoumání těchto dvou možností jsem narazil na MessagePack. 
+			Další můj pokus by byl buď JSON nebo nějak data serilizovat do binaru, při zkoumání těchto dvou možností jsem narazil na MessagePack. 
 		\subsubsection{MessagePack}
 			MessagePack\cite{mpSpec} je velmi rychlí bynární serilizační formát. Naštěstí už někdo ho naimplementoval pro {\Csharp} takže jsem to nemusel implantovat sám. Bohužel jsem měl pořád ten samý problém že nemam model takže jsem je musel je mít v pamětí jako pole polí objektů, kde každé pole objektů byl jeden řádek. Teoreticky bych si mohl za běhu vytvořit třídu a serializovat data na ní, ale pak bych k datům musel přistupovat přes reflexi a nemyslím si že to by bylo dostatečně rychlé. Ta implementace MessagePacku\cite{mpImpl} kterou jsem si vybral dokonce podporovala kompresní pomocí LZ4. LZ4\cite{l4z} je velmi rychlí bezztrátový kompresní algoritmus. Který ještě nadále zrychlil přenos, zmenšením přenášených dat.
 		\subsubsection{WPF}
-TODO!!
-
+			WPF bylo vybráno hlavě kvůli tomu že firma vlastnila už nejáké komponenty které byli použity v předchozí aplikaci.
+			
+			WPF podporuje návrhový vzor MVVM který, stejně jako další MVX vzory odděluje data od vizuálu. To je docíleno pomocí bindingu. Což je mechanizmus který synchronizuje data co jsou ve view a view model. To znamená že pokud uživatel zadá neco do text boxu tak se to oběví i v property která je na ten text box na bindovaná. Pokud view model implementuje rozhraní "INotifyPropertyChanged" tak tento proces bude fungovat i opačným směrem.
+			
+			View jsou napsána v XAMLu což je značkovací jazyk založený na XML.
+			xaml
+			
+			
+			styli
 		\subsubsection{Lokalizace}
-TODO!!
-
+			Poněvadž aplikace {\EvolioEight} byla používaná nejen v České republice lokalizace byla velmi důležitá.
+			2 moduly xaml a static
 		\subsubsection{Editor filtrů}
-TODO!!
+			validace ... 		
 \section{Využité a scházející znalosti a dovednosti}
-TODO!!
+	\subsection{Využité znalosti}
+		\Csharp
+		asp.net
+	\subsection{Scházející znalosti}
+		WPF 
+		async
 \section{Závěr}
 TODO!!
 
