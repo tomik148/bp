@@ -5,6 +5,7 @@
 \usepackage[backend=biber, style=iso-numeric, alldates=iso]{biblatex} % bibliografie
 \usepackage{dcolumn} % sloupce tabulky s ciselnymi hodnotami
 \usepackage{subfig} % makra pro "podobrazky" a "podtabulky"
+\usepackage{listings} % code
 
 \newcommand{\AveSoft}{AVE~Soft~s.r.o.}
 \newcommand{\EvolioEight}{Evolio~8}
@@ -21,7 +22,7 @@
 
 \EnglishThesisTitle{Individual Professional Practice in the Company}
 
-\SubmissionDate{30. dubna 2020}
+\SubmissionDate{15. května 2020}
 
 % Pokud nechceme nikomu dekovat makro zapoznamkujeme.
 \Thanks{Rád bych na tomto místě poděkoval všem, kteří mi s prací pomohli, protože bez nich by tato práce nevznikla.}
@@ -58,6 +59,7 @@
 \AddAcronym{MVVM}{Model–view–viewmodel}
 \AddAcronym{XML}{Extensible Markup Language}
 \AddAcronym{XAML}{Extensible Application Markup Language}
+\AddAcronym{DI}{dependency injection}
  
 %\addbibresource{biblatex-examples.bib}
 %\addbibresource{coffee.bib}
@@ -135,18 +137,23 @@ TODO!!
 		\subsubsection{WPF}
 			WPF bylo vybráno hlavě kvůli tomu že firma vlastnila už nejáké komponenty které byli použity v předchozí aplikaci.
 			
-			WPF podporuje návrhový vzor MVVM který, stejně jako další MVX vzory odděluje data od vizuálu. To je docíleno pomocí bindingu. Což je mechanizmus který synchronizuje data co jsou ve view a view model. To znamená že pokud uživatel zadá neco do text boxu tak se to oběví i v property která je na ten text box na bindovaná. Pokud view model implementuje rozhraní "INotifyPropertyChanged" tak tento proces bude fungovat i opačným směrem.
+			WPF podporuje návrhový vzor MVVM který, stejně jako další MVX vzory odděluje data od vizuálu. To je docíleno pomocí bindingu. Což je mechanizmus který synchronizuje data co jsou ve View a ViewModel. To znamená že pokud uživatel zadá neco do text boxu tak se to oběví i v property která je na ten text box na bindovaná. Pokud ViewModel implementuje rozhraní "INotifyPropertyChanged" tak tento proces bude fungovat i opačným směrem.
 			
-			View jsou napsána v XAMLu což je značkovací jazyk založený na XML.
-			xaml
+			Pro to aby binding fungoval tak se nad každým View musí vyplněné property DataSource což je náš ViewModel, a pro zachování separace mezi daty a vizuálem je toto děláno přes DI. Kde na začátku programu si specifikuji k jakému View vytvořit jaký ViewModel a při vytvoření je spáruji. A pokud chce jakákoliv část programu komunikovat s tím View tak to musí udělat přes ten ViewModel.
 			
+			View jsou napsána v XAMLu což je značkovací jazyk založený na XML. Kde jednotlivé tagy jsou reprezentace tříd v {\Csharp} (např. "~<sys:Int32>~" kde "sys" je namespace "System", je třída "Int32" ). XAML umožňuje editaci za běhu programu, což bylo velmi užitečné při stylování. 
 			
-			styli
+			Nejsložitější částí byli styly, hlavně kůly tomu že jsem požíval komponenty od třetích stan. Ty sice většinou podporovaly nějakou customizaci ale ne vždy to stačilo. To s mou neznalostí WPF/XAML způsobilo že sem většinou nad tímto strávil dosti času.
 		\subsubsection{Lokalizace}
-			Poněvadž aplikace {\EvolioEight} byla používaná nejen v České republice lokalizace byla velmi důležitá.
-			2 moduly xaml a static
+			Poněvadž aplikace {\EvolioEight} byla používaná nejen v České republice lokalizace byla velmi důležitá. Překlady jsou uloženy v databázi takže po přihlášení uživatele si je můžu stáhnout, do té doby  překlady budou muset být hardcodovaný v aplikaci. Také je důležité mít přístup jak z {\Csharp} tak z XAMLu. Pro {\Csharp} stačí statická metoda ale pro XAML je po třeba napsat speciální třídu, v mem případě třída "Localization", která bude dědit z "MarkupExtension". Což mi dovolí použít tu třídu takhle.
+			\begin{lstlisting}[language=XML,caption={MarkupExtension příkad},label=MarkupExtension]
+<Label Content="{Shared:Localization Key='PŘEKLADOVÝ.KLÍČ', Default='Defaultní text'}"/>
+			\end{lstlisting}
+			 
+			 Kde "Shared" je namespace kde třída "Localization" je, "Localization" je MarkupExtension třída, "Key" je property na třídě "Localization" která obsahuje překladový klíč a property "Default" obsahuje defaultní text který se zobrazí pokud překlad není dostupný.
 		\subsubsection{Editor filtrů}
-			validace ... 		
+			validace ... 
+			sql		
 \section{Využité a scházející znalosti a dovednosti}
 	\subsection{Využité znalosti}
 		\Csharp
@@ -154,6 +161,7 @@ TODO!!
 	\subsection{Scházející znalosti}
 		WPF 
 		async
+		
 \section{Závěr}
 TODO!!
 
@@ -162,7 +170,7 @@ TODO!!
 
 
 %\appendix
-%\section{Plné tkví drah pokles průběhu}
+%\section{}
 %TODO!!
 
 \end{document}

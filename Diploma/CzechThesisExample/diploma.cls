@@ -23,9 +23,9 @@
 %% This work is licensed under CC BY-NC-ND 3.0 CZ, https://creativecommons.org/licenses/by-nc-nd/3.0/cz/deed.en
 %% You may distribute it and use it for non-commercial purposes, but the author must be mentioned and the document can not be changed.
 %% 
-\def\fileversion{4.3}
-\def\filedate{2018/05/30}
-\def\docdate{30. května 2019}
+\def\fileversion{4.31}
+\def\filedate{2020/02/26}
+\def\docdate{26. února 2020}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{diploma}[\filedate\space \fileversion\space diploma LaTeX document class]
 \RequirePackage{ifthen}
