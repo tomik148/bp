@@ -15,6 +15,8 @@
 \newcommand{\Csharp}{%
   {\settoheight{\dimen0}{C}C\kern-.05em \resizebox{!}{\dimen0}{\raisebox{\depth}{\#}}}}
 
+\newcommand{\un}{\underline{ }}
+
 % Zadame pozadovane vstupy pro generovani titulnich stran.
 \ThesisAuthor{Tomáš Chalupa}
 
@@ -60,6 +62,7 @@
 \AddAcronym{XML}{Extensible Markup Language}
 \AddAcronym{XAML}{Extensible Application Markup Language}
 \AddAcronym{DI}{dependency injection}
+\AddAcronym{CDS}{Custom Data Source}
  
 %\addbibresource{biblatex-examples.bib}
 %\addbibresource{coffee.bib}
@@ -119,7 +122,7 @@ TODO!!
 \section{Moje úkoly}
 	Moje hlavní náplní praxe byl vývoj aplikace {\EFilters}, sekundárně pak také oprava chyb aplikace {\EvolioEight}.
 	\subsection{\EFilters}
-		{\EFilters} je desktopová aplikace, kterou jsem měl za úkol vytvořit. Tato část aplikace {\EvolioEight} (v ní pod názvem "Filtry") by jako webová aplikace fungovala hůře.
+		{\EFilters} je desktopová aplikace, kterou jsem měl za úkol vytvořit. Tato část aplikace {\EvolioEight} (v ní pod názvem \uv{Filtry}) by jako webová aplikace fungovala hůře.
 		Filtry jsou uživatelem napsané SQL dotazy. Pro optimalizaci exekučního plánu jsou uloženy jako procedury, nad kterými lze provádět hromadné operace, ať už přes SQL nebo jiné interní systémy.
 		
 		Vzhledem k tomu, že filtry mohou vrátit veliké množství dat – až v řádech milionů záznamů, není webová aplikace pro jejich implementaci vhodná.
@@ -127,7 +130,7 @@ TODO!!
 			Prvním krokem při vývoji této aplikace bylo zjistit, zda vůbec lze vytvořit dostatečně rychlou aplikaci, která by zvládla přibližně milion záznamů a začala je zobrazovat ihned poté, co je obdržela ze serveru – bez potřeby stáhnout je před zobrazením všechny, jako tomu bylo u předchozí aplikace {\EvolioEight}.
 			Taktéž tato demo aplikace mi sloužila jako seznámení s WPF, se kterým jsem do té doby nepracoval.
 			
-			K databázi jsem měl přístup jen přes {\EData} takže můj první úkol byl napsat controller který by poskytoval data pro daný filter. Dostat data z databáze do controlleru bylo celkem jednoduché, v ostatních controllerech se požíval "Dapper" tak jsem ho požil také, má už zabudouvanou serilizaci takže to jsem řešit nemusel, bohužel nemam žadný model do kterého bych mohl data serilazovat tak sem si musel vystačit se serializací do pole objektů, což je skoro jako dynamická třída. Teď jsem ale musel dostat tyto data z EDat do mé aplikace.
+			K databázi jsem měl přístup jen přes {\EData} takže můj první úkol byl napsat controller který by poskytoval data pro daný filter. Dostat data z databáze do controlleru bylo celkem jednoduché, v ostatních controllerech se požíval \uv{Dapper} tak jsem ho požil také, má už zabudouvanou serilizaci takže to jsem řešit nemusel, bohužel nemam žadný model do kterého bych mohl data serilazovat tak sem si musel vystačit se serializací do pole objektů, což je skoro jako dynamická třída. Teď jsem ale musel dostat tyto data z EDat do mé aplikace.
 		\subsubsection{Serializace}
 			Jeden z prvích rozhodnutí které jsem musel udělat bylo v jakém formátu data přenášet. Plain text, nejednoduší možnost, měla nevýhodu že se ztratil datový typ. Je sice možné parsovat string zpátky do jednotlivých typů ale není to nejrychlejší ba naopak je to pomalé natolik že jsem to použít nemohl.
 			
@@ -135,31 +138,50 @@ TODO!!
 		\subsubsection{MessagePack}
 			MessagePack\cite{mpSpec} je velmi rychlí bynární serilizační formát. Naštěstí už někdo ho naimplementoval pro {\Csharp} takže jsem to nemusel implantovat sám. Bohužel jsem měl pořád ten samý problém že nemam model takže jsem je musel je mít v pamětí jako pole polí objektů, kde každé pole objektů byl jeden řádek. Teoreticky bych si mohl za běhu vytvořit třídu a serializovat data na ní, ale pak bych k datům musel přistupovat přes reflexi a nemyslím si že to by bylo dostatečně rychlé. Ta implementace MessagePacku\cite{mpImpl} kterou jsem si vybral dokonce podporovala kompresní pomocí LZ4. LZ4\cite{l4z} je velmi rychlí bezztrátový kompresní algoritmus. Který ještě nadále zrychlil přenos, zmenšením přenášených dat.
 		\subsubsection{WPF}
-			WPF bylo vybráno hlavě kvůli tomu že firma vlastnila už nejáké komponenty které byli použity v předchozí aplikaci.
+			WPF bylo vybráno hlavě kvůli tomu že firma vlastnila už nějaké komponenty které byli použity v předchozí aplikaci.
 			
-			WPF podporuje návrhový vzor MVVM který, stejně jako další MVX vzory odděluje data od vizuálu. To je docíleno pomocí bindingu. Což je mechanizmus který synchronizuje data co jsou ve View a ViewModel. To znamená že pokud uživatel zadá neco do text boxu tak se to oběví i v property která je na ten text box na bindovaná. Pokud ViewModel implementuje rozhraní "INotifyPropertyChanged" tak tento proces bude fungovat i opačným směrem.
+			WPF podporuje návrhový vzor MVVM který, stejně jako další MVX vzory odděluje data od vizuálu. To je docíleno pomocí bindingu. Což je mechanizmus který synchronizuje data co jsou ve View a ViewModel. To znamená že pokud uživatel zadá neco do text boxu tak se to oběví i v property která je na ten text box na bindovaná. Pokud ViewModel implementuje rozhraní \uv{INotifyPropertyChanged} tak tento proces bude fungovat i opačným směrem.
 			
 			Pro to aby binding fungoval tak se nad každým View musí vyplněné property DataSource což je náš ViewModel, a pro zachování separace mezi daty a vizuálem je toto děláno přes DI. Kde na začátku programu si specifikuji k jakému View vytvořit jaký ViewModel a při vytvoření je spáruji. A pokud chce jakákoliv část programu komunikovat s tím View tak to musí udělat přes ten ViewModel.
 			
-			View jsou napsána v XAMLu což je značkovací jazyk založený na XML. Kde jednotlivé tagy jsou reprezentace tříd v {\Csharp} (např. "~<sys:Int32>~" kde "sys" je namespace "System", je třída "Int32" ). XAML umožňuje editaci za běhu programu, což bylo velmi užitečné při stylování. 
+			View jsou napsána v XAMLu což je značkovací jazyk založený na XML. Kde jednotlivé tagy jsou reprezentace tříd v {\Csharp} (např. \uv{<sys:Int32>} kde \uv{sys} je namespace \uv{System}, je třída \uv{Int32} ). XAML umožňuje editaci za běhu programu, což bylo velmi užitečné při stylování. 
 			
 			Nejsložitější částí byli styly, hlavně kůly tomu že jsem požíval komponenty od třetích stan. Ty sice většinou podporovaly nějakou customizaci ale ne vždy to stačilo. To s mou neznalostí WPF/XAML způsobilo že sem většinou nad tímto strávil dosti času.
 		\subsubsection{Lokalizace}
-			Poněvadž aplikace {\EvolioEight} byla používaná nejen v České republice lokalizace byla velmi důležitá. Překlady jsou uloženy v databázi takže po přihlášení uživatele si je můžu stáhnout, do té doby  překlady budou muset být hardcodovaný v aplikaci. Také je důležité mít přístup jak z {\Csharp} tak z XAMLu. Pro {\Csharp} stačí statická metoda ale pro XAML je po třeba napsat speciální třídu, v mem případě třída "Localization", která bude dědit z "MarkupExtension". Což mi dovolí použít tu třídu takhle.
+			Poněvadž aplikace {\EvolioEight} byla používaná nejen v České republice lokalizace byla velmi důležitá. Překlady jsou uloženy v databázi takže po přihlášení uživatele si je můžu stáhnout, do té doby  překlady budou muset být hardcodovaný v aplikaci. Také je důležité mít přístup jak z {\Csharp} tak z XAMLu. Pro {\Csharp} stačí statická metoda ale pro XAML je po třeba napsat speciální třídu, v mém případě třída \uv{Localization}, která bude dědit z \uv{MarkupExtension}. Což mi dovolí použít tu třídu takhle.
 			\begin{lstlisting}[language=XML,caption={MarkupExtension příkad},label=MarkupExtension]
 <Label Content="{Shared:Localization Key='PŘEKLADOVÝ.KLÍČ', Default='Defaultní text'}"/>
 			\end{lstlisting}
 			 
-			 Kde "Shared" je namespace kde třída "Localization" je, "Localization" je MarkupExtension třída, "Key" je property na třídě "Localization" která obsahuje překladový klíč a property "Default" obsahuje defaultní text který se zobrazí pokud překlad není dostupný.
+			 Kde \uv{Shared} je namespace kde třída \uv{Localization} je, \uv{Localization} je MarkupExtension třída, \uv{Key} je property na třídě \uv{Localization} která obsahuje překladový klíč a property \uv{Default} obsahuje defaultní text který se zobrazí pokud překlad není dostupný.
+		\subsubsection{Filtry}
+			Filter je rozdělen do několika tabulek, tabulka \uv{Filters} obsahuje jméno, SQL dotaz a jméno procedury plus nejáké další nepoviné data. 
+			Dále tabulka \uv{FilterProperties} obsahuje data pro jednotlivé property filtru jako je jméno, datová typ, přesnost, velikost, jestli je parametr povinný a také data pro CDS. Tabulka \uv{FilterResultColumns} obsahuje data o sloupcích které filter vrací. 
+			Ty jsou generována při ukládání, nebo editaci, pomocí SQL funkce \uv{sys.sp{\un}describe{\un}first{\un}result{\un}set} která bez toho aby proceduru spustila vrátí sloupce které by procedura vrátila. 
+			Taktéž se tam ukládají data k zobrazení sloupců. A nakonec tabulka \uv{FilterActions} obsahuje data k nepárovaným akcím.
+	
 		\subsubsection{Editor filtrů}
-			validace ... 
+			Další součástí této aplikace byl editor filtrů, který dovolil uživatelům přímo v aplikaci vytvářet a editovat filtry. 
+			
+			ukládání,
+			
+			validace, 
+			
 			sql		
+		\subsubsection{CDS}
+			TODO!!
+			
+		\subsubsection{Akce}
+			TODO!!
+			
 \section{Využité a scházející znalosti a dovednosti}
 	\subsection{Využité znalosti}
 		\Csharp
+		
 		asp.net
 	\subsection{Scházející znalosti}
 		WPF 
+		
 		async
 		
 \section{Závěr}
