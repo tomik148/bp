@@ -156,9 +156,12 @@ TODO!!
 			 Kde \uv{Shared} je namespace kde třída \uv{Localization} je, \uv{Localization} je MarkupExtension třída, \uv{Key} je property na třídě \uv{Localization} která obsahuje překladový klíč a property \uv{Default} obsahuje defaultní text který se zobrazí pokud překlad není dostupný.
 		\subsubsection{Filtry}
 			Filter je rozdělen do několika tabulek, tabulka \uv{Filters} obsahuje jméno, SQL dotaz a jméno procedury plus nejáké další nepoviné data. 
-			Dále tabulka \uv{FilterProperties} obsahuje data pro jednotlivé property filtru jako je jméno, datová typ, přesnost, velikost, jestli je parametr povinný a také data pro CDS. Tabulka \uv{FilterResultColumns} obsahuje data o sloupcích které filter vrací. 
-			Ty jsou generována při ukládání, nebo editaci, pomocí SQL funkce \uv{sys.sp{\un}describe{\un}first{\un}result{\un}set} která bez toho aby proceduru spustila vrátí sloupce které by procedura vrátila. 
-			Taktéž se tam ukládají data k zobrazení sloupců. A nakonec tabulka \uv{FilterActions} obsahuje data k nepárovaným akcím.
+			
+			Dále tabulka \uv{FilterProperties} obsahuje data pro jednotlivé property filtru jako je jméno, datová typ, přesnost, velikost, jestli je parametr povinný a také data pro CDS. 
+			
+			Tabulka \uv{FilterResultColumns} obsahuje data o sloupcích které filter vrací. Ty jsou generována při ukládání, nebo editaci, pomocí SQL funkce \uv{sys.sp{\un}describe{\un}first{\un}result{\un}set} která bez toho aby proceduru spustila vrátí sloupce které by procedura vrátila. Taktéž se tam ukládají data k zobrazení sloupců. 
+			
+			A nakonec tabulka \uv{FilterActions} obsahuje data k nepárovaným akcím.
 	
 		\subsubsection{Editor filtrů}
 			Další součástí této aplikace byl editor filtrů, který dovolil uživatelům přímo v aplikaci vytvářet a editovat filtry. 
@@ -169,8 +172,16 @@ TODO!!
 			
 			sql		
 		\subsubsection{CDS}
-			TODO!!
+			CDS je velice podobné Enumu v \Csharp. Kde je hodnota, u Enumu číslo, a text který vidí uživatel. CSD má dva typy, ten první je z tabuky a to znamená že si uživatel vybere dva sloupce z jedné tabulky a jeden bude text a druhý bude hodnota. Taktéž na to jde přidat podmínku pro výběr jen nějakých hodnot.
+			\begin{figure}[h]
+				\includegraphics{Figures/cds.png}
+				\caption{Tohle je ukázka nastavení CSD 1. typu.}
+    			\label{fig:CSDimg}
+			\end{figure}
 			
+			Pro uživatele by CSD z obrázku \ref{fig:CSDimg} vypadal jako combobox jmen zaměstnanců co mají PlatceDPH nastaveno na false, proceduře by se ale poslalo CisloZamnestnance místo jména.
+			
+			Druhý typ CSD je předem připravená procedura, pro složitější dotazy (např. když je nutno použít join) je potřeba vytvořit proceduru která bude vracet páry textu a hodnot.
 		\subsubsection{Akce}
 			TODO!!
 			
