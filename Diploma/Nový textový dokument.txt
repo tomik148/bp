@@ -1,0 +1,41 @@
+MessagePack - NumOfRows: 1000000 - LoadingTime: 114699 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 113924 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 115536 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 113191 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 115903 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 112237 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 115519 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 114588 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 114119 ms - Size: 84694601 B
+MessagePack - NumOfRows: 1000000 - LoadingTime: 112902 ms - Size: 84694601 B
+  MessagePack - NumOfRows: 1000000 - LoadingTime: 114261.8 ms - Size: 84694601 B
+                                                
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 84513 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 85737 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 82761 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 83291 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 81265 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 80107 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 80610 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 80021 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 80053 ms - Size: 4023121 B
+MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 80535 ms - Size: 4023121 B
+  MessagePackCompressed - NumOfRows: 1000000 - LoadingTime: 81889.3 ms - Size: 4023121 B
+                                                          
+Json - NumOfRows: 1000000 - LoadingTime: 119583 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 120831 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 119156 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 118460 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 119003 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 118538 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 118674 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 119416 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 120842 ms - Size: 354130418 B
+Json - NumOfRows: 1000000 - LoadingTime: 118777 ms - Size: 354130418 B
+  Json - NumOfRows: 1000000 - LoadingTime: 119328 ms - Size: 354130418 B
+  
+  
+NumOfRows: 1000000
+  MessagePack -           LoadingTime: 114261,8 ms - (1) Size: 84694601(1) B
+  MessagePackCompressed - LoadingTime: 81889,3 ms - (0,7166813405705144)  Size: 4023121 B (0,0475015048479891)
+  Json -                  LoadingTime: 119328 ms - (1,04433852783695)  Size: 354130418 B (4,181263195277347)

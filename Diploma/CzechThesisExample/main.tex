@@ -80,18 +80,19 @@
 
 % A nasleduje text zaverecne prace.
 \section{Úvod}
-TODO!!
+Mojí bakalářskou práci jsem vykonával jako odbornou praxi u firmy \AveSoft. Praxi jsem si chtěl vybrat oproti klasické bakalářské práci už od začátku. A {\AveSoft} měl zajímavou nabídku, hlavní bylo pro mně že bych programoval {\Csharp} nejen kvůli tomu že v něm umím dobře programovat ale také kvůli tomu že mně s ním baví pracovat.
 
+V této práci popíši některé problémy a jak jsem je řešil. Co my je pomohlo vyřešit a co jsem se musel ještě doučit a nakonec zhodnotím jak moje praxe dopadla.
 \section{O firmě}
 	\AveSoft\cite{avesoftL} je softwarová společnost založena roku 1997 vyvíjející informační systémy pro exekutory a právní kanceláře, kromě toho také vytváří software na míru.
 	Mezi jejich zákazníky patří české pobočky prodejců automobilů Opel a životní pojišťovna Wustenrot, D.A.S. - Pojišťovna pro právní výdaje.
 	\AveSoft\cite{avesoft} získala řadu ocenění, včetně druhého místa v soutěži české mobilní aplikace 2012 nebo finalisty Microsoft Industry Awards 2007 a 2012.
 	\subsection{Startupy}
-	Vedle klasický produktů u nás vznikly projekty, které svým přesahem a zaměřením vyžadovaly odlišný přístup. Vzdali jsme se proto pohodlí běžné IT společnosti a projekty osamostatnili jako plnohodnotné startupy.
+	Vedle klasický produktů v AveSoftu vznikly projekty, které svým přesahem a zaměřením vyžadovaly odlišný přístup. Proto je {\AveSoft} vytvořil jako jako plnohodnotné startupy.
  		\subsubsection{EXDRAZBY.CZ}
  		V roce 2010 byl změněn zákon, který umožnil provádět dražby nemovitostí online. Byla to skvělá příležitost pro rozjezd nového projektu exdrazby.cz.
 
-		Po osmi měsících vývoje byla na trh uvedena ostrá verze dražebního portálu, který se během prvního roku stal největším na trhu, svou pozici v dalších letech ještě posílil. Klíčovým faktorem úspěchu byla sada nadstandardních služeb rozšiřující základní službu provedení aukce.
+		Po osmi měsících vývoje měly na trhu ostrou verzi dražebního portálu, který se během prvního roku stal největším na trhu, svou pozici v dalších letech ještě posílil. Klíčovým faktorem úspěchu byla sada nadstandardních služeb rozšiřující základní službu provedení aukce.
 
 		Za prvních pět let provozu byly prostřednictvím exdrazby.cz vydraženy nemovitosti v hodnotě více než 8 miliard korun.
  		\subsubsection{PRESENTIGO}
@@ -104,13 +105,6 @@ TODO!!
 			\item
 			Na klíč jsou vytvářeny prezentace, které zákazníky zaujmou a zároveň pomohou dobře vysvětlit přínosy nabízeného produktu nebo služby.
 		\end{itemize}
-
- 		\subsubsection{MIXIEW}
- 		Myšlenka vytvořit Mixiew vzešla z následující úvahy: Každý amatérský závodník chce mít ze závodu nějaké fotky a video. Co takhle posbírat záznamy od profesionálních kameramanů i diváků na tratit a sestříhat originální video pro každého závodníka?
-
-		Aby celá myšlenka dávala smysl, bylo nutné najít funkční business model. Ukázalo se, že do sportu teče obrovské množství peněz od sponzorů. Ti stále hledají nové způsoby, jak tyto peníze vynaložit efektivně a měřitelně.
-
-		Závodníci svá videa z Mixiew sdílí na sociálních sítích a tak sponzor získá možnost propagace své značky nejen vůči závodníkům, ale i v okruhu jejich kontaktů.
 	\subsection{Firemní software}
 		\subsubsection{\EvolioEight}
 		{\EvolioEight} je desktopová aplikace napsaná v {\Csharp} WPF s jádrem z předchozí verze napsané v VB.NET. Jedná se o informační systém navržený pro použití v advokacii a příbuzných oborech. 
@@ -126,6 +120,13 @@ TODO!!
 		Filtry jsou uživatelem napsané SQL dotazy. Pro optimalizaci exekučního plánu jsou uloženy jako procedury, nad kterými lze provádět hromadné operace, ať už přes SQL nebo jiné interní systémy.
 		
 		Vzhledem k tomu, že filtry mohou vrátit veliké množství dat – až v řádech milionů záznamů, není webová aplikace pro jejich implementaci vhodná.
+			
+			\begin{figure}[h!]
+				\includegraphics[width=1.0\textwidth]{Figures/EFilters.png}
+				\caption{Takto vypadá jeden z Filtrů v aplikaci {\EFilters}.}
+    			\label{fig:EFilters}
+			\end{figure}
+		
 		\subsubsection{Demo aplikace}
 			Prvním krokem při vývoji této aplikace bylo zjistit, zda vůbec lze vytvořit dostatečně rychlou aplikaci, která by zvládla přibližně milion záznamů a začala je zobrazovat ihned poté, co je obdržela ze serveru – bez potřeby stáhnout je před zobrazením všechny, jako tomu bylo u předchozí aplikace {\EvolioEight}.
 			Taktéž tato demo aplikace mi sloužila jako seznámení s WPF, se kterým jsem do té doby nepracoval.
@@ -134,7 +135,22 @@ TODO!!
 		\subsubsection{Serializace}
 			Jedno z prvních rozhodnutí, které jsem musel udělat, bylo, v jakém formátu data přenášet. Plain text, nejednoduší možnost, měla nevýhodu, že během přenosu nezachovala datový typ. Je sice možné parsovat string zpátky do jednotlivých typů, ale není to nejrychlejší -- naopak je to velmi pomalé, a to natolik, že reálně tato varianta nešla použít a bylo potřeba zvolit jinou možnost.
 			
-			Jako další možnosti se nabízel JSON nebo serializace do binaru, při zkoumání těchto variant jsem narazil na MessagePack. 
+			Jako další možnosti se nabízel JSON nebo serializace do binaru, při zkoumání těchto variant jsem narazil na MessagePack.
+			\begin{table}[h!]
+				\centering
+				\begin{tabular}{|c|c|c|} 
+ 					\hline
+ 					Serializace & Rychlost\footnotemark\ [s] & Velikost[MB] \\\hline\hline
+ 					MessagePack & 114,26 (1)\footnotemark & 84,69 (1)\footnotemark[\value{footnote}] 	\\\hline
+ 					MessagePack s LZ4 & 81,88 (0,7166)\footnotemark[\value{footnote}] & 4,02 (0,0475)\footnotemark[\value{footnote}]   \\\hline
+ 					JSON & 119,32 (1,0443)\footnotemark[\value{footnote}]  & 354,13 (4,1812)\footnotemark[\value{footnote}] 	\\\hline
+				\end{tabular}
+				
+				\caption{Porovnání serializačních formátů.}
+				\label{table:serilization}
+			\end{table}
+			 \footnotetext{Normalizované k MessagePack}
+			 \footnotetext[1]{Čas je zprůměrován mezi 10 běhy (každý běh 1 000 000 záznamů)}
 		\subsubsection{MessagePack}
 			MessagePack\cite{mpSpec} je velmi rychlý binární serializační formát. Naštěstí už byl naimplementován pro {\Csharp}, nebylo tedy nutné, abych tak učinil sám. Bohužel přetrvával problém, že jsem neměl k dispozici model, takže jsem musel data mít v paměti jako pole polí objektů, kde každé pole objektů byl jeden řádek. Teoreticky bych si mohl za běhu vytvořit třídu a serializovat data na ní, ale pak bych k datům musel přistupovat přes reflexi, což by pravděpodobně vyústilo v problémy s výkonem. Zvolená implementace MessagePacku\cite{mpImpl} dokonce podporovala kompresi pomocí LZ4. LZ4\cite{l4z} je velmi rychlý bezztrátový kompresní algoritmus, který ještě nadále zrychlil přenos zmenšením přenášených dat. 
  
@@ -162,7 +178,7 @@ TODO!!
 			
 			Tabulka \uv{FilterResultColumns} obsahuje data o sloupcích, které filtr vrací. Ta jsou generována při ukládání nebo editaci, pomocí SQL funkce \uv{sys.sp{\un}describe{\un}first{\un}result{\un}set}, která bez toho, aniž by proceduru spustila, vrátí sloupce, které by procedura vrátila. Taktéž se zde ukládají data k zobrazení sloupců. 
 			
-			A nakonec tabulka \uv{FilterActions} obsahuje data k nepárovaným akcím.
+			A nakonec tabulka \uv{FilterActions} obsahuje data k spárovaným akcím.
 	
 		\subsubsection{Editor filtrů}
 			Další součástí této aplikace byl editor filtrů, který dovolil uživatelům přímo v aplikaci vytvářet a editovat filtry. 
@@ -197,8 +213,7 @@ TODO!!
 		async
 		
 \section{Závěr}
-TODO!!
-
+Během odborné praxe jsem se naučil spoustu dovedností a zjistil jsem jak probíhá práce v týmu. Aplikace je teď vydaná a u většiny zákazníků nahradila předchozí verzi ({\EvolioEight}). 
 
 \printbibliography[title={Literatura}, heading=bibintoc]
 
