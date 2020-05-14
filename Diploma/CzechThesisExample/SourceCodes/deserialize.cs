@@ -4,7 +4,7 @@ using (var stream = await response.Content.ReadAsStreamAsync()){
     batch = LZ4MessagePackSerializer.Deserialize<object[][]>(stream, true);
     if (batch is null) { break; }
     else{
-      Data.AddRange(batch);
+      Application.Current.Dispatcher.Invoke(Data.AddRange(batch));
     }
   }
 }

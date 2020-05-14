@@ -61,7 +61,6 @@
 \AddAcronym{MVVM}{Model–view–viewmodel}
 \AddAcronym{XML}{Extensible Markup Language}
 \AddAcronym{XAML}{Extensible Application Markup Language}
-\AddAcronym{DI}{Dependency injection}
 \AddAcronym{CDS}{Custom Data Source}
  
 %\addbibresource{biblatex-examples.bib}
@@ -113,8 +112,23 @@ V této práci popíši některé problémy a jak jsem je řešil. Co my je pomo
 		\subsubsection{\EData}
 		{\EData} je webové REST API napsané v jazyce {\Csharp} a postavené na technologii ASP.NET Core MVC.
 		Slouží především k přístupu do databázi pro {\EvolioX} a {\EFilters}.
+		\subsubsection{EData Client}
+		EData Client je knihovna napsaná na ulehčení práce s EDatami. Například přihlášení do EDat nebo získání tabulky z databáze. 
 \section{Moje úkoly}
 	Mojí hlavní náplní praxe byl vývoj aplikace {\EFilters}, sekundárně pak také oprava chyb aplikace {\EvolioEight}.
+	\subsection{Použité technologie}
+			\subsubsection{MessagePack}
+			MessagePack\cite{mpSpec} je velmi rychlý binární serializační formát. Naštěstí už byl naimplementován pro {\Csharp}, nebylo tedy nutné, abych tak učinil sám. Bohužel přetrvával problém, že jsem neměl k dispozici žádnou třidu do které bych data mohl serializovat, takže jsem je musel data mít v paměti jako pole polí objektů, kde každé pole objektů byl jeden řádek. Teoreticky bych si mohl za běhu vytvořit třídu a serializovat data do ní, ale pak bych k datům musel přistupovat přes reflexion API, což by vyústilo v problémy s výkonem. Zvolená implementace MessagePacku\cite{mpImpl} dokonce podporovala kompresi pomocí LZ4. LZ4\cite{l4z} je velmi rychlý bezztrátový kompresní algoritmus, který ještě nadále zrychlil přenos zmenšením přenášených dat. 
+		\subsubsection{WPF}
+			WPF bylo vybráno hlavě kvůli tomu, že firma už vlastnila několik komponentů, které byly použity v předchozí aplikaci.
+			
+			WPF podporuje návrhový vzor MVVM, který stejně jako další MVX vzory odděluje data od prezentační vrstvy, čehož je docíleno pomocí bindingu. Což je mechanizmus, který synchronizuje data, která jsou ve View a ViewModel. To znamená, že pokud uživatel zadá něco do text boxu, tak se to propíše i do property, která je na daný TextBox navázána. Pokud ViewModel implementuje rozhraní \uv{INotifyPropertyChanged}, bude tento proces fungovat i opačným směrem.
+			
+			Pro to, aby binding fungoval, se nad každým View musí vyplnit property DataSource, což je náš ViewModel, a pro zachování separace mezi daty a vizuálem je toto děláno prostřednictvím vkládání závislostí. Tam si na začátku programu specifikuji k jakému View vytvořit jaký ViewModel a při vytvoření je spáruji. Pokud chce jakákoliv část programu komunikovat s tímto View, musí tak učinit přes spárovaný ViewModel.
+			
+			View jsou napsána v XAMLu což je značkovací jazyk založený na XML. Kde jednotlivé tagy jsou reprezentace tříd v {\Csharp} (např. \uv{<sys:Int32>} kde \uv{sys} je namespace \uv{System}, je třída \uv{Int32} ). XAML umožňuje editaci za běhu programu, což bylo velmi užitečné při stylování. 
+			
+			Nejsložitější částí byly styly, hlavně kvůli používání komponent od třetích stran. Ty sice většinou podporovaly nějakou customizaci, ale ne vždy dostatečně. To spolu s mou neznalostí WPF/XAML zapříčinilo pro mě vysokou časovou náročnost.
 	\subsection{\EFilters}
 		{\EFilters} je desktopová aplikace, kterou jsem měl za úkol vytvořit. Tato část aplikace {\EvolioEight} (v ní pod názvem \uv{Filtry}) by jako webová aplikace fungovala hůře.
 		Filtry jsou uživatelem napsané SQL dotazy. Pro optimalizaci exekučního plánu jsou uloženy jako procedury. A nad daty které procedury vrací lze provádět hromadné operace (\uv{Akce}), ať už přes SQL nebo jiné interní systémy.
@@ -126,16 +140,25 @@ V této práci popíši některé problémy a jak jsem je řešil. Co my je pomo
 				\caption{Takto vypadá jeden z Filtrů v aplikaci {\EFilters}.}
     			\label{fig:EFilters}
 			\end{figure}
-		
+			
+			\begin{figure}[h]
+				\includegraphics[width=1.0\textwidth]{Figures/EfiltersDiagram.png}
+				\caption{Diagram aplikace {\EFilters} a EDat.}
+    			\label{fig:EFiltersDiagram}
+			\end{figure}
 		\subsubsection{Demo aplikace}
 			Prvním krokem při vývoji této aplikace bylo zjistit, zda vůbec lze vytvořit dostatečně rychlou aplikaci, která by zvládla stáhnout a zobrazit milion záznamů stejně rychle nebo rychleji než předchozí aplikace. A zároveň je začala zobrazovat ihned poté, co je obdržela ze serveru – bez potřeby stáhnout je před zobrazením všechny, jako tomu bylo u předchozí aplikace {\EvolioEight}.
 			Taktéž tato demo aplikace mi sloužila jako seznámení s WPF, se kterým jsem do té doby nepracoval.
-			
-			K databázi jsem měl přístup jen přes {\EData}, takže můj první úkol byl napsat controller, který by poskytoval data pro daný filter. Předat data z databáze controlleru bylo poměrně jednoduché, v ostatních controllerech se používal \uv{Dapper} (což je knihovna sloužící k práci s databází), bylo tedy příhodné jej také použít. Serializaci má zabudovanou, nebylo tedy třeba ji řešit zvlášť. Bohužel nemám k dispozici žádný model, do kterého bych mohl data serializovat. Zbyla tedy možnost serializace do pole objektů. Nyní bylo nutné dostat tato data z EDat do mé aplikace.
+
+
+		\subsubsection{Filter Controller}
+			K databázi jsem měl přístup jen přes {\EData}, takže můj první úkol byl napsat controller, který by poskytoval data pro daný filter. Předat data z databáze controlleru bylo poměrně jednoduché použil jsem SqlDataReader který my umožnil číst jednotlivé řádky a ihned je streamovat na klienta. Nakonec jsem ještě začal posílat data v malých skupinkách to bylo rychlejší a pokud skupinky byli dostatečně malé tak to na klientovy ani nebylo poznat.
+			Zde je vidět zjednodušený kód s použití MessagePacku.
+			\lstinputlisting[caption={Serializace dat v controlleru.}]{SourceCodes/serialize.cs}
 		\subsubsection{Serializace}
-			Jedno z prvních rozhodnutí, které jsem musel udělat, bylo v jakém formátu data přenášet(z EDat do mé aplikace). Plain text, nejednoduší možnost, měla nevýhodu, že během přenosu nezachovala datový typ. Je sice možné parsovat string zpátky do jednotlivých typů, ale není to nejrychlejší -- naopak je to velmi pomalé, a to natolik, že reálně tato varianta nešla použít a bylo potřeba zvolit jinou možnost.
+			Jedno z prvních rozhodnutí, které jsem musel udělat, bylo v jakém formátu data přenášet (z EDat do mé aplikace). Plain text, nejednoduší možnost, měla nevýhodu, že během přenosu nezachovala datový typ. Je sice možné parsovat string zpátky do jednotlivých typů, ale není to nejrychlejší -- naopak je to velmi pomalé, a to natolik, že reálně tato varianta nešla použít a bylo potřeba zvolit jinou možnost.
 			
-			Jako další možnosti se nabízel JSON nebo serializace do binárního kódu, při zkoumání těchto variant jsem narazil na MessagePack.
+			Jako další možnosti se nabízel JSON nebo serializace do binárního kódu, při zkoumání těchto variant jsem narazil na MessagePack. A po trochu testování jsem zjistil že doopravdy je mojí nejrychlejší možností tak jsem se rozhodl ho použít.
 			\begin{table}[h!]
 				\centering
 				\begin{tabular}{|c|c|c|} 
@@ -151,21 +174,11 @@ V této práci popíši některé problémy a jak jsem je řešil. Co my je pomo
 			\end{table}
 			 \footnotetext{Normalizované k MessagePack}
 			 \footnotetext[1]{Čas je zprůměrován mezi 10 běhy (každý běh 1 000 000 záznamů)}
-			 \lstinputlisting[caption={Serializace dat v controlleru.}]{SourceCodes/serialize.cs}
+		\subsubsection{Deserializace}
+			 Na druhé straně v {\EFilters} je nutné data deserializovat. Zde se vyskytl první problém kde deserializace byla prováděna v asynchroní metodě aby uživatelské rozhraní zůstalo responsní. Což znamenalo že tento kód běžel na jiném vlákně a WPF nedovoluje úpravu prezenční vrstvy z jiného než hlavního vlákna (na které běží Dispatcher). Proto jsem musel použít Dispatcher.Invoke aby Dispatcher pustil můj kód na správném vlákně.
+
 			 \lstinputlisting[caption={Deserializace dat v {\EFilters}.}]{SourceCodes/deserialize.cs}
-		\subsubsection{MessagePack}
-			MessagePack\cite{mpSpec} je velmi rychlý binární serializační formát. Naštěstí už byl naimplementován pro {\Csharp}, nebylo tedy nutné, abych tak učinil sám. Bohužel přetrvával problém, že jsem neměl k dispozici model, takže jsem musel data mít v paměti jako pole polí objektů, kde každé pole objektů byl jeden řádek. Teoreticky bych si mohl za běhu vytvořit třídu a serializovat data na ní, ale pak bych k datům musel přistupovat přes reflexi, což by vyústilo v problémy s výkonem. Zvolená implementace MessagePacku\cite{mpImpl} dokonce podporovala kompresi pomocí LZ4. LZ4\cite{l4z} je velmi rychlý bezztrátový kompresní algoritmus, který ještě nadále zrychlil přenos zmenšením přenášených dat. 
- 
-		\subsubsection{WPF}
-			WPF bylo vybráno hlavě kvůli tomu, že firma už vlastnila několik komponentů, které byly použity v předchozí aplikaci.
-			
-			WPF podporuje návrhový vzor MVVM, který stejně jako další MVX vzory odděluje data od prezentační vrstvy, čehož je docíleno pomocí bindingu. Což je mechanizmus, který synchronizuje data, která jsou ve View a ViewModel. To znamená, že pokud uživatel zadá něco do text boxu, tak se to propíše i do property, která je na daný TextBox navázána. Pokud ViewModel implementuje rozhraní \uv{INotifyPropertyChanged}, bude tento proces fungovat i opačným směrem.
-			
-			Pro to, aby binding fungoval, se nad každým View musí vyplnit property DataSource, což je náš ViewModel, a pro zachování separace mezi daty a vizuálem je toto děláno prostřednictvím DI. Tam si na začátku programu specifikuji k jakému View vytvořit jaký ViewModel a při vytvoření je spáruji. Pokud chce jakákoliv část programu komunikovat s tímto View, musí tak učinit přes spárovaný ViewModel.
-			
-			View jsou napsána v XAMLu což je značkovací jazyk založený na XML. Kde jednotlivé tagy jsou reprezentace tříd v {\Csharp} (např. \uv{<sys:Int32>} kde \uv{sys} je namespace \uv{System}, je třída \uv{Int32} ). XAML umožňuje editaci za běhu programu, což bylo velmi užitečné při stylování. 
-			
-			Nejsložitější částí byly styly, hlavně kvůli používání komponent od třetích stran. Ty sice většinou podporovaly nějakou customizaci, ale ne vždy dostatečně. To spolu s mou neznalostí WPF/XAML zapříčinilo pro mě vysokou časovou náročnost.
+
 		\subsubsection{Lokalizace}
 			Poněvadž aplikace {\EvolioEight} byla používána nejen v České republice lokalizace byla velmi důležitá. Překlady jsou uloženy v databázi, takže po přihlášení uživatele si je můžu stáhnout, do té doby překlady budou muset být hardcodované v aplikaci. Také je důležité mít přístup jak z {\Csharp}, tak z XAMLu. Pro {\Csharp} stačí statická metoda, ale pro XAML je po třeba napsat speciální třídu, v mém případě třída \uv{Localization}, která bude dědit z \uv{MarkupExtension}. To mi dovolí použít jmenovanou třídu následujícím způsobem:
 			\begin{lstlisting}[language=XML,caption={MarkupExtension příkad},label=MarkupExtension]
