@@ -81,7 +81,7 @@
 \section{Úvod}
 Mojí bakalářskou práci jsem vykonával jako odbornou praxi u firmy \AveSoft. Praxi jsem si chtěl vybrat oproti klasické bakalářské práci už od začátku. A {\AveSoft} měl zajímavou nabídku, hlavní bylo pro mně že bych programoval {\Csharp} nejen kvůli tomu že v něm umím dobře programovat ale také kvůli tomu že mně s ním baví pracovat.
 
-V této práci popíši některé problémy a jak jsem je řešil. Co my je pomohlo vyřešit a co jsem se musel ještě doučit a nakonec zhodnotím jak moje praxe dopadla.
+V této práci popíši některé problémy a jak jsem je řešil. Například jak sem stremoval data se serveru do mé aplikace něco o filtrech a akcích a další problémy a co my je pomohlo vyřešit a co jsem se musel ještě doučit a nakonec zhodnotím jak moje praxe dopadla.
 \section{O firmě}
 	\AveSoft\cite{avesoftL} je softwarová společnost založena roku 1997 vyvíjející informační systémy pro exekutory a právní kanceláře, kromě toho také vytváří software na míru.
 	Mezi jejich zákazníky patří české pobočky prodejců automobilů Opel a životní pojišťovna Wustenrot, D.A.S. - Pojišťovna pro právní výdaje.
@@ -133,14 +133,15 @@ V této práci popíši některé problémy a jak jsem je řešil. Co my je pomo
 		{\EFilters} je desktopová aplikace, kterou jsem měl za úkol vytvořit. Tato část aplikace {\EvolioEight} (v ní pod názvem \uv{Filtry}) by jako webová aplikace fungovala hůře.
 		Filtry jsou uživatelem napsané SQL dotazy. Pro optimalizaci exekučního plánu jsou uloženy jako procedury. A nad daty které procedury vrací lze provádět hromadné operace (\uv{Akce}), ať už přes SQL nebo jiné interní systémy.
 		
-		Vzhledem k tomu, že filtry mohou vrátit veliké množství dat – až v řádech milionů záznamů, není webová aplikace pro jejich implementaci vhodná.
+		Vzhledem k tomu, že filtry mohou vrátit veliké množství dat – až v řádech milionů záznamů, není webová aplikace pro jejich implementaci vhodná. Na obrázku \ref{fig:EFilters} lze vidět filtr otevřený v aplikaci {\EFilters}, nalevo lze vidět nastavení parametrů pro tento filtr a také 3 akce které lze provést nad tímto filtrem.
+
 			
 			\begin{figure}[h!]
 				\includegraphics[width=1.0\textwidth]{Figures/EFilters.png}
 				\caption{Takto vypadá jeden z Filtrů v aplikaci {\EFilters}.}
     			\label{fig:EFilters}
 			\end{figure}
-			
+					Poté na obrázku \ref{fig:EFiltersDiagram} lze vidět jak probíhá komunikace mezi \EFilters, EDatami a databází.
 			\begin{figure}[h]
 				\includegraphics[width=1.0\textwidth]{Figures/EfiltersDiagram.png}
 				\caption{Diagram aplikace {\EFilters} a EDat.}
@@ -153,8 +154,8 @@ V této práci popíši některé problémy a jak jsem je řešil. Co my je pomo
 
 		\subsubsection{Filter Controller}
 			K databázi jsem měl přístup jen přes {\EData}, takže můj první úkol byl napsat controller, který by poskytoval data pro daný filter. Předat data z databáze controlleru bylo poměrně jednoduché použil jsem SqlDataReader který my umožnil číst jednotlivé řádky a ihned je streamovat na klienta. Nakonec jsem ještě začal posílat data v malých skupinkách to bylo rychlejší a pokud skupinky byli dostatečně malé tak to na klientovy ani nebylo poznat.
-			Zde je vidět zjednodušený kód s použití MessagePacku.
-			\lstinputlisting[caption={Serializace dat v controlleru.}]{SourceCodes/serialize.cs}
+			Ve výpisu \ref{list:serializace} je vidět zjednodušený kód s použití MessagePacku.
+			\lstinputlisting[caption={Serializace dat v controlleru.},label={list:serializace}]{SourceCodes/serialize.cs}
 		\subsubsection{Serializace}
 			Jedno z prvních rozhodnutí, které jsem musel udělat, bylo v jakém formátu data přenášet (z EDat do mé aplikace). Plain text, nejednoduší možnost, měla nevýhodu, že během přenosu nezachovala datový typ. Je sice možné parsovat string zpátky do jednotlivých typů, ale není to nejrychlejší -- naopak je to velmi pomalé, a to natolik, že reálně tato varianta nešla použít a bylo potřeba zvolit jinou možnost.
 			
@@ -177,11 +178,12 @@ V této práci popíši některé problémy a jak jsem je řešil. Co my je pomo
 		\subsubsection{Deserializace}
 			 Na druhé straně v {\EFilters} je nutné data deserializovat. Zde se vyskytl první problém kde deserializace byla prováděna v asynchroní metodě aby uživatelské rozhraní zůstalo responsní. Což znamenalo že tento kód běžel na jiném vlákně a WPF nedovoluje úpravu prezenční vrstvy z jiného než hlavního vlákna (na které běží Dispatcher). Proto jsem musel použít Dispatcher.Invoke aby Dispatcher pustil můj kód na správném vlákně.
 
-			 \lstinputlisting[caption={Deserializace dat v {\EFilters}.}]{SourceCodes/deserialize.cs}
+			 \lstinputlisting[caption={Deserializace dat v {\EFilters}.},label={list:deserializace}]{SourceCodes/deserialize.cs}
 
 		\subsubsection{Lokalizace}
-			Poněvadž aplikace {\EvolioEight} byla používána nejen v České republice lokalizace byla velmi důležitá. Překlady jsou uloženy v databázi, takže po přihlášení uživatele si je můžu stáhnout, do té doby překlady budou muset být hardcodované v aplikaci. Také je důležité mít přístup jak z {\Csharp}, tak z XAMLu. Pro {\Csharp} stačí statická metoda, ale pro XAML je po třeba napsat speciální třídu, v mém případě třída \uv{Localization}, která bude dědit z \uv{MarkupExtension}. To mi dovolí použít jmenovanou třídu následujícím způsobem:
-			\begin{lstlisting}[language=XML,caption={MarkupExtension příkad},label=MarkupExtension]
+			Poněvadž aplikace {\EvolioEight} byla používána nejen v České republice lokalizace byla velmi důležitá. Překlady jsou uloženy v databázi, takže po přihlášení uživatele si je můžu stáhnout. Také je důležité mít přístup k lokalizaci jak z {\Csharp}, tak z XAMLu. Pro {\Csharp} stačí statická metoda, ale pro XAML je po třeba napsat speciální třídu, v mém případě třída \uv{Localization}, která bude dědit z \uv{MarkupExtension}. To mi dovolí jí
+použít jako ve výpisu \ref{list:MarkupExtension}.
+			\begin{lstlisting}[language=XML,caption={MarkupExtension příkad},label={list:MarkupExtension}]
 <Label Content="{Shared:Localization Key='PŘEKLADOVÝ.KLÍČ', Default='Defaultní text'}"/>
 			\end{lstlisting}
 			 %kde třída localization je co? Doplň, vypadlo ti to
@@ -191,19 +193,21 @@ V této práci popíši některé problémy a jak jsem je řešil. Co my je pomo
 			
 			Dále tabulka \uv{FilterProperties} obsahuje data pro jednotlivé property filtru jako je jméno, datový typ, přesnost, velikost, zda je parametr povinný a také data pro CDS. 
 			
-			Tabulka \uv{FilterResultColumns} obsahuje data o sloupcích, které filtr vrací. Ta jsou generována při ukládání nebo editaci, pomocí SQL funkce \uv{sys.sp{\un}describe{\un}first{\un}result{\un}set}, která bez toho, aniž by proceduru spustila, vrátí sloupce, které by procedura vrátila. Taktéž se zde ukládají data k zobrazení sloupců. 
+			Tabulka \uv{FilterResultColumns} obsahuje data o sloupcích, které filtr vrací. Ta jsou generována při ukládání nebo editaci, pomocí systémové SQL funkce \textit{sys.sp{\un}describe{\un}first{\un}result{\un}set}, která bez toho, aniž by proceduru spustila, vrátí sloupce, které by procedura vrátila. Taktéž se zde ukládají data k zobrazení sloupců. 
 			
 			A nakonec tabulka \uv{FilterActions} obsahuje data k spárovaným akcím.
-	
+			
+		\subsubsection{Akce}
+			Jsou 3 druhy akcí: uložené procedury, EService a Assembly. Uložené procedury se dají přidávat a editovat přímo z této aplikace, jsou podobné filtrům, ale místo vracení tabulky změní některé hodnoty. EService jsou microservisy založené nad technologií RabbitMQ. Nakonec, pokud zákazník potřebuje nějakou funkci (např. uložit soubor na disk), která nelze uspokojit předchozíma dvěma druhy, použije se Assembly. Parametry pro tyto akce mohou pocházet ze 3 různých zdrojů buď je to konstanta a vždy se pošel stejná hodnota, nebo se hodnota může vzít z parametrů filtru nebo z označeného sloupce (pokud chci poslat hodnotu ze sloupce "UserID" tak jednoduše specifikuji sloupec). 
 		\subsubsection{Editor filtrů}
-			Další součástí této aplikace byl editor filtrů, který dovolil uživatelům přímo v aplikaci vytvářet a editovat filtry. Poněvadž se edituje více než jedna tabulka najednou tak toto musí být provedeno v transakci aby se buď uložily všechna data nebo žádná. Při uložení se také vytváří také procedura daného filtru, pokud uživatel napsal dotaz špatně tak to zde selže a vrátí se mu chybová hláška co je špatně a filtr se neuloží. To znamená že není potřeba kontrolovat SQL kód na klientovy, což by nejspíše bylo uděláno přes nějakou knihovnu, není potřeba. Pokud se procedura vytvoří tak se na ní zavolá již zmíněná SQL funkce sys.sp{\un}describe{\un}first{\un}result{\un}set a poté je filtr úspěšně uložen.
+			Další součástí této aplikace byl editor filtrů, který dovolil uživatelům přímo v aplikaci vytvářet a editovat filtry. Poněvadž se edituje více než jedna tabulka najednou tak toto musí být provedeno v transakci aby se buď uložily všechna data nebo žádná. Při uložení se také vytváří také procedura daného filtru, pokud uživatel napsal dotaz špatně tak to zde selže a vrátí se mu chybová hláška co je špatně a filtr se neuloží. To znamená že není potřeba kontrolovat SQL kód na klientovi, což by nejspíše bylo uděláno přes nějakou knihovnu. Pokud se procedura vytvoří tak se na ní zavolá již zmíněná systémová SQL funkce \textit{sys.sp{\un}describe{\un}first{\un}result{\un}set} a poté je filtr úspěšně uložen.
 			\begin{figure}[h]
 				\includegraphics[width=1.0\textwidth]{Figures/Edit.png}
-				\caption{Ukázka editace filtru na tabu SQL dotaz.}
+				\caption{Ukázka editace filtru na záložce SQL dotaz.}
     			\label{fig:Editimg}
 			\end{figure}
 		\subsubsection{CDS}
-			CDS je velmi podobné Enumu v \Csharp, kde je hodnota, u Enumu číslo, a text, který vidí uživatel. CSD má dva typy, ten první je z tabuky, což znamená, že uživatel vybere dva sloupce z jedné tabulky, kde jeden bude text a druhý bude hodnota. Taktéž lze přidat podmínku pro výběr jen některých hodnot.
+			CDS (custom data source) je velmi podobné Enumu v \Csharp, kde je hodnota, u Enumu číslo, a text, který vidí uživatel. CSD má dva typy, ten první je z tabuky, což znamená, že uživatel vybere dva sloupce z jedné tabulky, kde jeden bude text a druhý bude hodnota. Taktéž lze přidat podmínku pro výběr jen některých hodnot.
 			\begin{figure}[h]
 				\includegraphics{Figures/cds.png}
 				\caption{Tohle je ukázka nastavení CSD 1. typu.}
@@ -213,8 +217,6 @@ V této práci popíši některé problémy a jak jsem je řešil. Co my je pomo
 			Pro uživatele by CSD z obrázku \ref{fig:CSDimg} vypadal jako combobox jmen zaměstnanců, kteří mají PlatceDPH nastaveno na false, proceduře by se ale poslalo CisloZamnestnance místo jména.
 			
 			Druhý typ CSD je předem připravená procedura, pro složitější dotazy (např. když je nutno použít join) je potřeba vytvořit proceduru která bude vracet páry textu a hodnot.
-		\subsubsection{Akce}
-			Jsou 3 druhy akcí: uložené procedury, EService a Assembly. Uložené procedury se dají přidávat a editovat přímo z této aplikace, jsou podobné filtrům, ale místo vracení tabulky změní některé hodnoty. EService jsou microservisy založené nad technologií RabbitMQ. Nakonec, pokud zákazník potřebuje nějakou funkci (např. uložit soubor na disk), která nelze uspokojit předchozíma dvěma druhy, použije se Assembly.
 			
 \section{Využité a scházející znalosti a dovednosti}
 	\subsection{Využité znalosti}
