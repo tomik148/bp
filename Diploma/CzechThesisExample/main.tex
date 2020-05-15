@@ -28,7 +28,7 @@
 \SubmissionDate{15. května 2020}
 
 % Pokud nechceme nikomu dekovat makro zapoznamkujeme.
-\Thanks{Rád bych na tomto místě poděkoval všem mým kolegům v práci, mému vedoucímu práce ,mému konzultantovy ve firmě a všem ostatním kteří mi s prací , protože bez nich by tato práce nevznikla.}
+\Thanks{Rád bych na tomto místě poděkoval všem mým kolegům v práci, mému vedoucímu práce, mému konzultantovi ve firmě a všem ostatním, kteří mi s prací pomohli.}
 
 % Zadame cestu a jmeno souboru ci nekolika souboru s digitalizovanou podobou zadani prace.
 % Pokud toto makro zapoznamkujeme sazi se stranka s upozornenim.
@@ -41,13 +41,13 @@
 
 % Zadame soubor s digitalizovanou podobou souhlasu spolupracujici prav. nebo fyz. osoby.
 % Pokud toto makro zapoznamkujeme sazi se cisty text souhlasu.
-\CooperatingPersonsDeclarationImageFile{Figures/CoopPersonDeclaration.jpg}
+\CooperatingPersonsDeclarationImageFile{Figures/CoopPersonDeclaration.png}
 
 \CzechAbstract{Tato práce popisuje průběh mé bakalářské práce formou individuální odborné praxe ve firmě \AveSoft. Ve firmě jsem působil jako \Csharp\ .NET DEVELOPER. Mým úkolem bylo vytvořit pomocnou aplikaci k již existujícímu informačnímu systému Evolio, která by zvládla pracovat s velkým množstvím dat.}
 
 \CzechKeywords{Bakalářská praxe; Informační systém; \Csharp; WPF}
 
-\EnglishAbstract{This paper discribes my bachelor's thesis by form of individual apprenticeship in company \AveSoft.I worked in the company as \ Csharp \ .NET DEVELOPER. My task was to create an hepler application for the already existing Evolio information system, which would be able to work with a large amount of data.}
+\EnglishAbstract{This paper describes my bachelor's thesis by form of individual apprenticeship in company \AveSoft. I worked in the company as \Csharp\ .NET DEVELOPER. My task was to create a helper application for the already existing Evolio information system. This helper application would be able to work with a large amount of data.}
 
 \EnglishKeywords{Bachelor thesis; Information system; \Csharp; WPF}
 
@@ -80,9 +80,9 @@
 
 % A nasleduje text zaverecne prace.
 \section{Úvod}
-Mojí bakalářskou práci jsem vykonával jako odbornou praxi u firmy \AveSoft. Praxi jsem si chtěl vybrat oproti klasické bakalářské práci už od začátku. A {\AveSoft} měl zajímavou nabídku, hlavní bylo pro mně že bych programoval {\Csharp} nejen kvůli tomu že v něm umím dobře programovat ale také kvůli tomu že mně s ním baví pracovat.
+Svou bakalářskou práci jsem vykonával jako odbornou praxi u firmy \AveSoft. Praxi jsem preferoval oproti klasické bakalářské práci už od začátku. A {\AveSoft} měl zajímavou nabídku, hlavní pro mne bylo, že bych mohl uplatnit své zkušenosti s programováním v jazyce {\Csharp}, ve kterém mě navíc pracovat baví.
 
-V této práci popíši některé problémy a jak jsem je řešil. Například jak sem stremoval data se serveru do mé aplikace něco o filtrech a akcích a další problémy a co my je pomohlo vyřešit a co jsem se musel ještě doučit a nakonec zhodnotím jak moje praxe dopadla.
+V této práci popíši některé problémy a jak jsem je řešil. Například jak jsem streamoval data ze serveru do mé aplikace, něco o filtrech a akcích, zmíním problémy, na které jsem narazil a napíši, co mi je pomohlo vyřešit, dále pak co jsem se musel ještě doučit a nakonec zhodnotím, jak moje praxe dopadla.
 \section{O firmě}
 	\AveSoft\cite{avesoftL} je softwarová společnost založena roku 1997 vyvíjející informační systémy pro exekutory a právní kanceláře, kromě toho také vytváří software na míru.
 	Mezi jejich zákazníky patří české pobočky prodejců automobilů Opel a životní pojišťovna Wustenrot, D.A.S. - Pojišťovna pro právní výdaje.
@@ -114,25 +114,25 @@ V této práci popíši některé problémy a jak jsem je řešil. Například j
 		{\EData} je webové REST API napsané v jazyce {\Csharp} a postavené na technologii ASP.NET Core MVC.
 		Slouží především k přístupu do databázi pro {\EvolioX} a {\EFilters}.
 		\subsubsection{EData Client}
-		EData Client je knihovna napsaná na ulehčení práce s EDatami. Například přihlášení do EDat nebo získání tabulky z databáze. 
+		EData Client je knihovna napsaná na ulehčení práce s API {\EData}. Například přihlášení do něj nebo získání tabulky z databáze. 
 \section{Moje úkoly}
 	Mojí hlavní náplní praxe byl vývoj aplikace {\EFilters}, sekundárně pak také oprava chyb aplikace {\EvolioEight}.
 	\subsection{Použité technologie}
 			\subsubsection{MessagePack}
 			MessagePack\cite{mpSpec} je velmi rychlý binární serializační formát. Naštěstí už byl naimplementován pro {\Csharp}, nebylo tedy nutné, abych tak učinil sám. Bohužel přetrvával problém, že jsem neměl k dispozici žádnou třidu do které bych data mohl serializovat, takže jsem je musel data mít v paměti jako pole polí objektů, kde každé pole objektů byl jeden řádek. Teoreticky bych si mohl za běhu vytvořit třídu a serializovat data do ní, ale pak bych k datům musel přistupovat přes reflexion API, což by vyústilo v problémy s výkonem. Zvolená implementace MessagePacku\cite{mpImpl} dokonce podporovala kompresi pomocí LZ4. LZ4\cite{l4z} je velmi rychlý bezztrátový kompresní algoritmus, který ještě nadále zrychlil přenos zmenšením přenášených dat. 
 		\subsubsection{WPF}
-			WPF bylo vybráno hlavě kvůli tomu, že firma už vlastnila několik komponentů, které byly použity v předchozí aplikaci.
+			WPF\cite{wpf} bylo vybráno hlavě kvůli tomu, že firma už vlastnila několik komponentů, které byly použity v předchozí aplikaci.
 			
-			WPF podporuje návrhový vzor MVVM, který stejně jako další MVX vzory odděluje data od prezentační vrstvy, čehož je docíleno pomocí bindingu. Což je mechanizmus, který synchronizuje data, která jsou ve View a ViewModel. To znamená, že pokud uživatel zadá něco do text boxu, tak se to propíše i do property, která je na daný TextBox navázána. Pokud ViewModel implementuje rozhraní \uv{INotifyPropertyChanged}, bude tento proces fungovat i opačným směrem.
+			WPF podporuje návrhový vzor MVVM\cite{mvvm}, který stejně jako další MVX vzory odděluje data od prezentační vrstvy, čehož je docíleno pomocí bindingu. Což je mechanizmus, který synchronizuje data, která jsou ve View a ViewModel. To znamená, že pokud uživatel zadá něco do text boxu, tak se to propíše i do property, která je na daný TextBox navázána. Pokud ViewModel implementuje rozhraní \uv{INotifyPropertyChanged}, bude tento proces fungovat i opačným směrem.
 			
 			Pro to, aby binding fungoval, se nad každým View musí vyplnit property DataSource, což je náš ViewModel, a pro zachování separace mezi daty a vizuálem je toto děláno prostřednictvím vkládání závislostí. Tam si na začátku programu specifikuji k jakému View vytvořit jaký ViewModel a při vytvoření je spáruji. Pokud chce jakákoliv část programu komunikovat s tímto View, musí tak učinit přes spárovaný ViewModel.
 			
-			View jsou napsána v XAMLu což je značkovací jazyk založený na XML. Kde jednotlivé tagy jsou reprezentace tříd v {\Csharp} (např. \uv{<sys:Int32>} kde \uv{sys} je namespace \uv{System}, je třída \uv{Int32} ). XAML umožňuje editaci za běhu programu, což bylo velmi užitečné při stylování. 
+			View jsou napsána v značkovacím jazyce XAML\cite{xaml}, jenž je založený na XML. Kde jednotlivé tagy jsou reprezentace tříd v {\Csharp} (např. \uv{<sys:Int32>} kde \uv{sys} je namespace \uv{System}, je třída \uv{Int32} ). XAML umožňuje editaci za běhu programu, což bylo velmi užitečné při stylování. 
 			
 			Nejsložitější částí byly styly, hlavně kvůli používání komponent od třetích stran. Ty sice většinou podporovaly nějakou customizaci, ale ne vždy dostatečně. To spolu s mou neznalostí WPF/XAML zapříčinilo pro mě vysokou časovou náročnost.
 	\subsection{\EFilters}
-		{\EFilters} je desktopová aplikace, kterou jsem měl za úkol vytvořit. Tato část aplikace {\EvolioEight} (v ní pod názvem \uv{Filtry}) by jako webová aplikace fungovala hůře.
-		Filtry jsou uživatelem napsané SQL dotazy. Pro optimalizaci exekučního plánu jsou uloženy jako procedury. A nad daty které procedury vrací lze provádět hromadné operace (\uv{Akce}), ať už přes SQL nebo jiné interní systémy.
+		{\EFilters} je desktopová aplikace, kterou jsem měl za úkol vytvořit. Tato část aplikace {\EvolioEight} (v ní pod názvem \uv{Filtry} vice v podkapitole \ref{txt:filters}) by jako webová aplikace fungovala hůře.
+		Filtry jsou uživatelem napsané SQL dotazy. Pro optimalizaci exekučního plánu jsou uloženy jako procedury. A nad daty které procedury vrací lze provádět hromadné operace (\ref{txt:action} Akce), ať už s pomocí SQL nebo jiné interní systémy.
 		
 		Vzhledem k tomu, že filtry mohou vrátit veliké množství dat – až v řádech milionů záznamů, není webová aplikace pro jejich implementaci vhodná. Na obrázku \ref{fig:EFilters} lze vidět filtr otevřený v aplikaci {\EFilters}, nalevo lze vidět nastavení parametrů pro tento filtr a také 3 akce které lze provést nad tímto filtrem.
 
@@ -142,23 +142,23 @@ V této práci popíši některé problémy a jak jsem je řešil. Například j
 				\caption{Takto vypadá jeden z Filtrů v aplikaci {\EFilters}.}
     			\label{fig:EFilters}
 			\end{figure}
-					Poté na obrázku \ref{fig:EFiltersDiagram} lze vidět jak probíhá komunikace mezi \EFilters, EDatami a databází.
+					Poté na obrázku \ref{fig:EFiltersDiagram} lze vidět jak probíhá komunikace mezi \EFilters, {\EData} a databází.
 			\begin{figure}[h]
 				\includegraphics[width=1.0\textwidth]{Figures/EfiltersDiagram.png}
 				\caption{Diagram aplikace {\EFilters} a EDat.}
     			\label{fig:EFiltersDiagram}
 			\end{figure}
 		\subsubsection{Demo aplikace}
-			Prvním krokem při vývoji této aplikace bylo zjistit, zda vůbec lze vytvořit dostatečně rychlou aplikaci, která by zvládla stáhnout a zobrazit milion záznamů stejně rychle nebo rychleji než předchozí aplikace. A zároveň je začala zobrazovat ihned poté, co je obdržela ze serveru – bez potřeby stáhnout je před zobrazením všechny, jako tomu bylo u předchozí aplikace {\EvolioEight}.
+			Prvním krokem při vývoji této aplikace bylo zjistit, zda vůbec lze vytvořit dostatečně rychlou aplikaci, která by zvládla stáhnout a zobrazit milion záznamů stejně rychle nebo rychleji než předchozí aplikace, a zároveň je začala zobrazovat ihned poté, co je obdržela ze serveru – bez potřeby stáhnout je před zobrazením všechny, jako tomu bylo u předchozí aplikace {\EvolioEight}.
 			Taktéž tato demo aplikace mi sloužila jako seznámení s WPF, se kterým jsem do té doby nepracoval.
 
 
 		\subsubsection{Filter Controller}
-			K databázi jsem měl přístup jen přes {\EData}, takže můj první úkol byl napsat controller, který by poskytoval data pro daný filter. Předat data z databáze controlleru bylo poměrně jednoduché použil jsem SqlDataReader který my umožnil číst jednotlivé řádky a ihned je streamovat na klienta. Nakonec jsem ještě začal posílat data v malých skupinkách to bylo rychlejší a pokud skupinky byli dostatečně malé tak to na klientovy ani nebylo poznat.
-			Ve výpisu \ref{list:serializace} je vidět zjednodušený kód s použití MessagePacku.
+			K databázi jsem měl přístup jen přes {\EData}, takže můj první úkol byl napsat controller, který by poskytoval data pro daný filter. Předat data z databáze controlleru bylo poměrně jednoduché -- použil jsem SqlDataReader, který mi umožnil číst jednotlivé řádky a ihned je streamovat na klienta. Nakonec jsem ještě začal posílat data v malých skupinkách.Tato metoda byla rychlejší a pokud skupinky byly dostatečně malé, tak na klientovi ani nebylo z pohledu uživatele poznat, že načítání probíhá průběžně.
+			Ve výpisu \ref{list:serializace} je vidět zjednodušený kód s použitím formátu MessagePack.
 			\lstinputlisting[caption={Serializace dat v controlleru.},label={list:serializace}]{SourceCodes/serialize.cs}
 		\subsubsection{Serializace}
-			Jedno z prvních rozhodnutí, které jsem musel udělat, bylo v jakém formátu data přenášet (z EDat do mé aplikace). Plain text, nejednoduší možnost, měla nevýhodu, že během přenosu nezachovala datový typ. Je sice možné parsovat string zpátky do jednotlivých typů, ale není to nejrychlejší -- naopak je to velmi pomalé, a to natolik, že reálně tato varianta nešla použít a bylo potřeba zvolit jinou možnost.
+			Jedno z prvních rozhodnutí, které jsem musel udělat, bylo v jakém formátu data přenášet (z EDat do mé aplikace). Plain text, nejjednodušší možnost, měla nevýhodu, že během přenosu nezachovala datový typ. Je sice možné parsovat string zpátky do jednotlivých typů, ale není to nejrychlejší -- naopak je to velmi pomalé, a to natolik, že reálně tato varianta nešla použít a bylo potřeba zvolit jinou možnost.
 			
 			Jako další možnosti se nabízel JSON nebo serializace do binárního kódu, při zkoumání těchto variant jsem narazil na MessagePack. A po trochu testování jsem zjistil že doopravdy je mojí nejrychlejší možností tak jsem se rozhodl ho použít.
 			\begin{table}[h!]
@@ -177,42 +177,46 @@ V této práci popíši některé problémy a jak jsem je řešil. Například j
 			 \footnotetext{Normalizované k MessagePack}
 			 \footnotetext[1]{Čas je zprůměrován mezi 10 běhy (každý běh 1 000 000 záznamů)}
 		\subsubsection{Deserializace}
-			 Na druhé straně v {\EFilters} je nutné data deserializovat. Zde se vyskytl první problém kde deserializace byla prováděna v asynchroní metodě aby uživatelské rozhraní zůstalo responsní. Což znamenalo že tento kód běžel na jiném vlákně a WPF nedovoluje úpravu prezenční vrstvy z jiného než hlavního vlákna (na které běží Dispatcher). Proto jsem musel použít Dispatcher.Invoke aby Dispatcher pustil můj kód na správném vlákně.
+			 Na druhé straně v {\EFilters} je nutné data deserializovat. Zde se vyskytl první problém, kde deserializace byla prováděna v asynchronní metodě, aby uživatelské rozhraní zůstalo responzní. To znamenalo, že tento kód běžel na jiném vlákně -- jenže WPF nedovoluje úpravu prezenční vrstvy z jiného než hlavního vlákna (na které běží Dispatcher). Proto jsem musel použít Dispatcher.Invoke, aby Dispatcher pustil můj kód na správném vlákně.
 
 			 \lstinputlisting[caption={Deserializace dat v {\EFilters}.},label={list:deserializace}]{SourceCodes/deserialize.cs}
 
 		\subsubsection{Lokalizace}
-			Poněvadž aplikace {\EvolioEight} byla používána nejen v České republice lokalizace byla velmi důležitá. Překlady jsou uloženy v databázi, takže po přihlášení uživatele si je můžu stáhnout. Také je důležité mít přístup k lokalizaci jak z {\Csharp}, tak z XAMLu. Pro {\Csharp} stačí statická metoda, ale pro XAML je po třeba napsat speciální třídu, v mém případě třída \uv{Localization}, která bude dědit z \uv{MarkupExtension}. To mi dovolí jí
+			Poněvadž aplikace {\EvolioEight} byla používána nejen v České republice, lokalizace byla velmi důležitá. Překlady jsou uloženy v databázi, takže po přihlášení uživatele jsou staženy a použity v uživatelském prostředí. Také je důležité mít přístup k lokalizaci jak z {\Csharp}, tak z XAML. Pro {\Csharp} stačí statická metoda, ale pro XAML je po třeba napsat speciální třídu, v mém případě třída \uv{Localization}, která bude dědit z \uv{MarkupExtension}. To mi dovolí ji
 použít jako ve výpisu \ref{list:MarkupExtension}.
 			\begin{lstlisting}[language=XML,caption={MarkupExtension příkad},label={list:MarkupExtension}]
 <Label Content="{Shared:Localization Key='PŘEKLADOVÝ.KLÍČ', Default='Defaultní text'}"/>
 			\end{lstlisting}
-			 %kde třída localization je co? Doplň, vypadlo ti to
-			 Kde \uv{Shared} je namespace ve kterém se nachází daná třída, \uv{Localization} je MarkupExtension třída, \uv{Key} je property na třídě \uv{Localization}, která obsahuje překladový klíč a property \uv{Default} obsahuje defaultní text, který se zobrazí pokud překlad není dostupný.
+			 
+			 Kde \uv{Shared} je namespace ve kterém se nachází daná třída, \uv{Localization} je MarkupExtension třída, \uv{Key} je property na třídě \uv{Localization}, která obsahuje překladový klíč a property \uv{Default} obsahuje výchozí text, který se zobrazí pokud překlad není dostupný.
 		\subsubsection{Filtry}
-			Filter je rozdělen do několika tabulek, tabulka \uv{Filters} obsahuje jméno, SQL dotaz a jméno procedury plus nějaká další nepovinná data. 
+		\label{txt:filters}
+			Filter je rozdělen do několika tabulek, tabulka \uv{Filters} obsahuje jméno, SQL dotaz a jméno procedury spolu s dalšími nepovinnými daty. 
 			
-			Dále tabulka \uv{FilterProperties} obsahuje data pro jednotlivé property filtru jako je jméno, datový typ, přesnost, velikost, zda je parametr povinný a také data pro CDS. 
+			Dále tabulka \uv{FilterProperties} obsahuje data pro jednotlivé property filtru údaje jako jsou jméno, datový typ, přesnost, velikost, zda je parametr povinný a také data pro CDS. 
 			
 			Tabulka \uv{FilterResultColumns} obsahuje data o sloupcích, které filtr vrací. Ta jsou generována při ukládání nebo editaci, pomocí systémové SQL funkce \textit{sys.sp{\un}describe{\un}first{\un}result{\un}set}, která bez toho, aniž by proceduru spustila, vrátí sloupce, které by procedura vrátila. Taktéž se zde ukládají data k zobrazení sloupců. 
 			
 			A nakonec tabulka \uv{FilterActions} obsahuje data k spárovaným akcím.
 			\begin{figure}[h!]
-				\includegraphics[width=1.0\textwidth]{Figures/ERdiagram.png}
+				\centering
+				\includegraphics[width=0.8\textwidth]{Figures/ERdiagram.png}
 				\caption{ER diagram tabulek filtrů.}
     			\label{fig:ERdiagram}
 			\end{figure}
 		\subsubsection{Akce}
-			Jsou 3 druhy akcí: uložené procedury, EService a Assembly. Uložené procedury se dají přidávat a editovat přímo z této aplikace, jsou podobné filtrům, ale místo vracení tabulky změní některé hodnoty. EService jsou microservisy založené nad technologií RabbitMQ. Nakonec, pokud zákazník potřebuje nějakou funkci (např. uložit soubor na disk), která nelze uspokojit předchozíma dvěma druhy, použije se Assembly. Parametry pro tyto akce mohou pocházet ze 3 různých zdrojů buď je to konstanta a vždy se pošel stejná hodnota, nebo se hodnota může vzít z parametrů filtru nebo z označeného sloupce (pokud chci poslat hodnotu ze sloupce "UserID" tak jednoduše specifikuji sloupec). 
+		\label{txt:action}
+			Jsou 3 druhy akcí: uložené procedury, EService a Assembly. Uložené procedury se dají přidávat a editovat přímo z této aplikace, jsou to uložené procedury. EService jsou microservices založené nad technologií RabbitMQ\cite{RabbitMQ}. Nakonec, pokud zákazník potřebuje nějakou funkci (např. uložit soubor na disk), která nelze uspokojit předchozíma dvěma druhy, použije se Assembly. Parametry pro tyto akce mohou pocházet ze 3 různých zdrojů: buď je to konstanta a vždy se použije stejná hodnota, nebo se hodnota může vzít z parametrů filtru, nebo z označeného sloupce (pokud chci poslat hodnotu ze sloupce "UserID", tak jednoduše specifikuji sloupec). 
 		\subsubsection{Editor filtrů}
-			Další součástí této aplikace byl editor filtrů, který dovolil uživatelům přímo v aplikaci vytvářet a editovat filtry. Poněvadž se edituje více než jedna tabulka najednou tak toto musí být provedeno v transakci aby se buď uložily všechna data nebo žádná. Při uložení se také vytváří také procedura daného filtru, pokud uživatel napsal dotaz špatně tak to zde selže a vrátí se mu chybová hláška co je špatně a filtr se neuloží. To znamená že není potřeba kontrolovat SQL kód na klientovi, což by nejspíše bylo uděláno přes nějakou knihovnu. Pokud se procedura vytvoří tak se na ní zavolá již zmíněná systémová SQL funkce \textit{sys.sp{\un}describe{\un}first{\un}result{\un}set} a poté je filtr úspěšně uložen.
+			Další součástí této aplikace byl editor filtrů, který dovolil uživatelům přímo v aplikaci vytvářet a editovat filtry. Jelikož se edituje více než jedna tabulka najednou, tak toto musí být provedeno v transakci, aby se uložila buď všechna data, nebo žádná. Při uložení se také vytváří také procedura daného filtru, pokud uživatel napsal dotaz špatně, dojde v tomto bodě k selhání a vrátí se chybová hláška s uvedeným problémem; filtr se neuloží. To znamená, že není potřeba kontrolovat SQL kód na klientovi, což by jinak bylo nejspíše uděláno přes vhodnou knihovnu. Pokud se procedura úspěšně vytvoří, zavolá se na ni již zmíněná systémová SQL funkce \textit{sys.sp{\un}describe{\un}first{\un}result{\un}set} a poté je filtr konečně uložen. Na obrázku \ref{fig:Editimg} lze vědět jak editor vypadá v aplikaci \EFilters.
 			\begin{figure}[h]
 				\includegraphics[width=1.0\textwidth]{Figures/Edit.png}
 				\caption{Ukázka editace filtru na záložce SQL dotaz.}
     			\label{fig:Editimg}
 			\end{figure}
 		\subsubsection{CDS}
-			CDS (custom data source) je velmi podobné Enumu v \Csharp, kde je hodnota, u Enumu číslo, a text, který vidí uživatel. CSD má dva typy, ten první je z tabuky, což znamená, že uživatel vybere dva sloupce z jedné tabulky, kde jeden bude text a druhý bude hodnota. Taktéž lze přidat podmínku pro výběr jen některých hodnot.
+		\label{txt:cds}
+			CDS (custom data source) je velmi podobné typu Enum v \Csharp, kde je hodnota -- v případě Enumu číslo -- a text, který vidí uživatel. CSD má dva typy, ten první je z tabuky, což znamená, že uživatel vybere dva sloupce z jedné tabulky, kde jeden bude text a druhý bude hodnota. Taktéž lze přidat podmínku pro výběr jen některých hodnot.
 			\begin{figure}[h]
 				\includegraphics{Figures/cds.png}
 				\caption{Tohle je ukázka nastavení CSD 1. typu.}
@@ -221,16 +225,16 @@ použít jako ve výpisu \ref{list:MarkupExtension}.
 			
 			Pro uživatele by CSD z obrázku \ref{fig:CSDimg} vypadal jako combobox jmen zaměstnanců, kteří mají PlatceDPH nastaveno na false, proceduře by se ale poslalo CisloZamnestnance místo jména.
 			
-			Druhý typ CSD je předem připravená procedura, pro složitější dotazy (např. když je nutno použít join) je potřeba vytvořit proceduru která bude vracet páry textu a hodnot.
+			Druhý typ CSD je předem připravená procedura, pro složitější dotazy (např. když je nutno použít join) je potřeba vytvořit proceduru, která bude vracet páry textu a hodnot.
 			
 \section{Využité a scházející znalosti a dovednosti}
 	\subsection{Využité znalosti}
-		Při odborné praxi jsem využil několik znalostí získaných při studiu. Práci s {\Csharp} a asp.net pomohly předměty \uv{Architektura technologie .NET} a \uv{Programovací jazyky II}. S databází my pomohly předměty \uv{Úvod do databázových systémů} a \uv{Databázové a informační systémy}. A nejednou my pomohla moje znalost verzovacího systému GIT.
+		Při odborné praxi jsem využil několik znalostí získaných při studiu. Práci s {\Csharp} a ASP.NET pomohly předměty \uv{Architektura technologie .NET} a \uv{Programovací jazyky II}. S databází mi pomohly předměty \uv{Úvod do databázových systémů} a \uv{Databázové a informační systémy}. A nejednou mi pomohla moje znalost verzovacího systému GIT.
 	\subsection{Scházející znalosti}
-		Naopak když jsem začínal s praxí tak jsem nevěděl nic o WPF, což jsem se velmi rychle naučil spolu s prací se XAML soubory. Taktéž jsem se dozvěděl spoustu o asynchronní programování. Dozvěděl jsem se jak se vydávají a spravují aplikace. Dále jsem ještě nepracoval v týmu takže práce ve více lidech byla také moje první zkušenost.
+		Naopak když jsem začínal s praxí, postrádal jsem zkušenosti s WPF, jež jsem velmi rychle získal spolu s prací s XAML soubory. Taktéž jsem se dozvěděl mnoho o asynchronní programování. Dozvěděl jsem se, jak se vydávají a spravují aplikace. Dále jsem nikdy předtím  nepracoval v týmu -- práce ve více lidech byla také moje první (a velmi cenná) zkušenost.
 		
 \section{Závěr}
-V této práci jsem pospal jak jsem řešil některé z problémů které nastali při této odborné praxi a moje řešení. Během praxe jsem převážně pracoval na {\EFilters} ale naučil jsem se spoustu dovedností a zjistil jsem také jak probíhá práce v týmu. Aplikace je teď vydaná a u většiny zákazníků nahradila předchozí verzi ({\EvolioEight}). 
+V této práci jsem popsal, jak jsem řešil některé z problémů, které nastaly při této odborné praxi a moje řešení. Během praxe jsem převážně pracoval na {\EFilters}, ale naučil jsem se spoustu dovedností a zjistil jsem také jak probíhá práce v týmu. Aplikace je teď vydaná a u většiny zákazníků nahradila předchozí verzi ({\EvolioEight}). 
 
 \printbibliography[title={Literatura}, heading=bibintoc]
 
