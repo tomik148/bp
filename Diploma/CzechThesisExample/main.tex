@@ -82,8 +82,10 @@
 \section{Úvod}
 Svou bakalářskou práci jsem vykonával jako odbornou praxi u firmy \AveSoft. Praxi jsem preferoval oproti klasické bakalářské práci už od začátku. A {\AveSoft} měl zajímavou nabídku, hlavní pro mne bylo, že bych mohl uplatnit své zkušenosti s programováním v jazyce {\Csharp}, ve kterém mě navíc pracovat baví.
 
-V této práci popíši některé problémy a jak jsem je řešil. Například jak jsem streamoval data ze serveru do mé aplikace, něco o filtrech a akcích, zmíním problémy, na které jsem narazil a napíši, co mi je pomohlo vyřešit, dále pak co jsem se musel ještě doučit a nakonec zhodnotím, jak moje praxe dopadla.
+%V této práci popíši některé problémy a jak jsem je řešil. Například jak jsem streamoval data ze serveru do mé aplikace, něco o filtrech a akcích, zmíním problémy, na které jsem narazil a napíši, co mi je pomohlo vyřešit, dále pak co jsem se musel ještě doučit a nakonec zhodnotím, jak moje praxe dopadla.
+ V kapitole \ref{txt:c2} popíšu něco málo o firmě kde jsem prováděl odbornou praxi a něco málo o jejich firemním softwaru. V kapitole \ref{txt:c3} najdete jaké technologie jsem požil a některé úkoly které jsem řešil (například serializaci a deserializaci nebo Lokalizaci). Poté v kapitole \ref{txt:c4} které znalosti jsem využil a které mi scházely a nakonec v kalitole \ref{txt:c5} zhodnotím, jak moje praxe dopadla.
 \section{O firmě}
+\label{txt:c2}
 	\AveSoft\cite{avesoftL} je softwarová společnost založena roku 1997 vyvíjející informační systémy pro exekutory a právní kanceláře, kromě toho také vytváří software na míru.
 	Mezi jejich zákazníky patří české pobočky prodejců automobilů Opel a životní pojišťovna Wustenrot, D.A.S. - Pojišťovna pro právní výdaje.
 	\AveSoft\cite{avesoft} získala řadu ocenění, včetně druhého místa v soutěži české mobilní aplikace 2012 nebo finalisty Microsoft Industry Awards 2007 a 2012.
@@ -116,6 +118,7 @@ V této práci popíši některé problémy a jak jsem je řešil. Například j
 		\subsubsection{EData Client}
 		EData Client je knihovna napsaná na ulehčení práce s API {\EData}. Například přihlášení do něj nebo získání tabulky z databáze. 
 \section{Moje úkoly}
+\label{txt:c3}
 	Mojí hlavní náplní praxe byl vývoj aplikace {\EFilters}, sekundárně pak také oprava chyb aplikace {\EvolioEight}.
 	\subsection{Použité technologie}
 			\subsubsection{MessagePack}
@@ -228,12 +231,14 @@ použít jako ve výpisu \ref{list:MarkupExtension}.
 			Druhý typ CSD je předem připravená procedura, pro složitější dotazy (např. když je nutno použít join) je potřeba vytvořit proceduru, která bude vracet páry textu a hodnot.
 			
 \section{Využité a scházející znalosti a dovednosti}
+\label{txt:c4}
 	\subsection{Využité znalosti}
 		Při odborné praxi jsem využil několik znalostí získaných při studiu. Práci s {\Csharp} a ASP.NET pomohly předměty \uv{Architektura technologie .NET} a \uv{Programovací jazyky II}. S databází mi pomohly předměty \uv{Úvod do databázových systémů} a \uv{Databázové a informační systémy}. A nejednou mi pomohla moje znalost verzovacího systému GIT.
 	\subsection{Scházející znalosti}
 		Naopak když jsem začínal s praxí, postrádal jsem zkušenosti s WPF, jež jsem velmi rychle získal spolu s prací s XAML soubory. Taktéž jsem se dozvěděl mnoho o asynchronní programování. Dozvěděl jsem se, jak se vydávají a spravují aplikace. Dále jsem nikdy předtím  nepracoval v týmu -- práce ve více lidech byla také moje první (a velmi cenná) zkušenost.
 		
 \section{Závěr}
+\label{txt:c5}
 V této práci jsem popsal, jak jsem řešil některé z problémů, které nastaly při této odborné praxi a moje řešení. Během praxe jsem převážně pracoval na {\EFilters}, ale naučil jsem se spoustu dovedností a zjistil jsem také jak probíhá práce v týmu. Aplikace je teď vydaná a u většiny zákazníků nahradila předchozí verzi ({\EvolioEight}). 
 
 \printbibliography[title={Literatura}, heading=bibintoc]
