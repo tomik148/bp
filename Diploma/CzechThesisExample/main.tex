@@ -36,7 +36,7 @@
 
 % Zadame soubor s digitalizovanou podobou prohlaseni autora zaverecne prace.
 % Pokud toto makro zapoznamkujeme sazi se cisty text prohlaseni.
-%\AuthorDeclarationImageFile{Figures/AuthorDeclaration.jpg}
+\AuthorDeclarationImageFile{Figures/AuthorDeclaration.png}
 
 
 % Zadame soubor s digitalizovanou podobou souhlasu spolupracujici prav. nebo fyz. osoby.
@@ -47,9 +47,9 @@
 
 \CzechKeywords{Bakalářská praxe; Informační systém; \Csharp; WPF}
 
-\EnglishAbstract{This paper discribes my bachelor's thesis by form of individual apprenticeship in company \AveSoft.}
+\EnglishAbstract{This paper discribes my bachelor's thesis by form of individual apprenticeship in company \AveSoft.I worked in the company as \ Csharp \ .NET DEVELOPER. My task was to create an hepler application for the already existing Evolio information system, which would be able to work with a large amount of data.}
 
-\EnglishKeywords{ Bachelor thesis; Information system; \Csharp; WPF}
+\EnglishKeywords{Bachelor thesis; Information system; \Csharp; WPF}
 
 \AddAcronym{WPF}{Windows Presentation Foundation}
 \AddAcronym{HTML}{Hyper Text Markup Language}
@@ -197,7 +197,11 @@ použít jako ve výpisu \ref{list:MarkupExtension}.
 			Tabulka \uv{FilterResultColumns} obsahuje data o sloupcích, které filtr vrací. Ta jsou generována při ukládání nebo editaci, pomocí systémové SQL funkce \textit{sys.sp{\un}describe{\un}first{\un}result{\un}set}, která bez toho, aniž by proceduru spustila, vrátí sloupce, které by procedura vrátila. Taktéž se zde ukládají data k zobrazení sloupců. 
 			
 			A nakonec tabulka \uv{FilterActions} obsahuje data k spárovaným akcím.
-			
+			\begin{figure}[h!]
+				\includegraphics[width=1.0\textwidth]{Figures/ERdiagram.png}
+				\caption{ER diagram tabulek filtrů.}
+    			\label{fig:ERdiagram}
+			\end{figure}
 		\subsubsection{Akce}
 			Jsou 3 druhy akcí: uložené procedury, EService a Assembly. Uložené procedury se dají přidávat a editovat přímo z této aplikace, jsou podobné filtrům, ale místo vracení tabulky změní některé hodnoty. EService jsou microservisy založené nad technologií RabbitMQ. Nakonec, pokud zákazník potřebuje nějakou funkci (např. uložit soubor na disk), která nelze uspokojit předchozíma dvěma druhy, použije se Assembly. Parametry pro tyto akce mohou pocházet ze 3 různých zdrojů buď je to konstanta a vždy se pošel stejná hodnota, nebo se hodnota může vzít z parametrů filtru nebo z označeného sloupce (pokud chci poslat hodnotu ze sloupce "UserID" tak jednoduše specifikuji sloupec). 
 		\subsubsection{Editor filtrů}
