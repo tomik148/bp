@@ -1,0 +1,7 @@
+Tato práce popisuje prùbìh mé bakaláøské práce formou individuální odborné praxe ve firmì \AveSoft. Ve firmì jsem pùsobil jako \Csharp\ .NET DEVELOPER. Mým úkolem bylo vytvoøit pomocnou aplikaci k již existujícímu informaènímu systému Evolio, která by zvládla pracovat s velkým množstvím dat.
+
+Bakaláøská praxe; Informaèní systém; C#; WPF
+
+This paper discribes my bachelor's thesis by form of individual apprenticeship in company \AveSoft.I worked in the company as \ Csharp \ .NET DEVELOPER. My task was to create an hepler application for the already existing Evolio information system, which would be able to work with a large amount of data.
+
+Bachelor thesis; Information system; C#; WPF
